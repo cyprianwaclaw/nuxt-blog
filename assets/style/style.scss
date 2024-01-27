@@ -1,0 +1,156 @@
+    @import "variables";
+    @supports (-webkit-overflow-scrolling: touch) {
+        select,
+        textarea,
+        input {
+            font-size: 16px;
+        }
+    }
+    
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    .error-color {
+        color: $color-error;
+    }
+    
+    body {
+        font-family: $family;
+    }
+    
+    h1 {
+        font-family: $family;
+        font-size: 52px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 64px;
+    }
+    
+    h2 {
+        font-family: $family;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: auto;
+    }
+    
+    h3 {
+        font-family: $family;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 27px;
+        letter-spacing: 0.75px;
+    }
+    
+    h5 {
+        font-family: $family;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0.75px;
+    }
+    
+    p {
+        letter-spacing: 0.32px;
+        font-family: $family;
+        /* line-height: 30px; */
+    }
+    
+    .des {
+        font-family: $family;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 23px;
+    }
+    
+    .gray {
+        color: $gray;
+    }
+    
+    input:focus {
+        outline: 0;
+    }
+    
+    .button-primary,
+    .button-primary:hover {
+        // width: 100%;
+        // height: 54px;
+        letter-spacing: 0.32px;
+        padding: 10px 26px;
+        border-radius: 8px;
+        background: $primary;
+        color: white;
+        font-family: $family;
+        position: relative;
+        /* Dodaj position
+:    relative */
+        overflow: hidden;
+        /* Dodaj overflow: hidden */
+        // transition: background 0.3s ease-in, transform 0.3s ease;
+        transition: background 0.3s ease-in, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        /* Dodaj transition na background i transform */
+    }
+    
+    .button-primary:hover {
+        background: darken($primary, 10%);
+        // transform: translateY(-5px);
+        /* Przesunięcie przycisku o 5 pikseli w górę */
+    }
+    
+    .button-category,
+    .button-category:hover {
+        padding: 6px 17px;
+        border-radius: 999px;
+        color: #8d8d8d;
+        letter-spacing: 0.32px; // border: 1px solid $text-gray;
+        font-size: 15px;
+        background: #F0F0F0;
+        font-weight: 400;
+        font-family: $family;
+        /* Dodaj position
+:    relative */
+        overflow: hidden;
+        /* Dodaj overflow: hidden */
+        // transition: background 0.3s ease-in, transform 0.3s ease;
+        transition: background 0.3s ease-in, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        /* Dodaj transition na background i transform */
+    }
+    
+    .button-category:hover {
+        background: darken(#F0F0F0, 6%);
+        color: #747474;
+        /* Przesunięcie przycisku o 5 pikseli w górę */
+    }
+    
+    .blur-background {
+        background: rgba(0, 0, 0, 0.56);
+        backdrop-filter: blur(4px);
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        z-index: 60;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .modal {
+        background-color: rgb(255, 255, 255);
+        border-radius: 12px !important;
+        padding: 52px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        width: 73%;
+    }
