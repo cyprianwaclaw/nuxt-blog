@@ -29,14 +29,17 @@
             color="#C5C5C5"
             size="24"
           />
+          <!-- {{ newData.save  }} -->
           <p class="text-[17px] text-[#C5C5C5]">{{ newData.commentsCount }}</p>
           <Icon
-            @click="changeSaved"
+            @click="changeSaved(newData.id)"
             :name="newData.saved ? 'ph:bookmark-simple-fill' : 'ph:bookmark-simple'"
-            class=""
-            :class="{ 'cursor-pointer': logged }"
-            :color="newData.saved ? '#618CFB' : '#C5C5C5'"
-            size="24"
+            :class="[
+              loggedIn ? 'cursor-pointer' : '',
+              [`post-saved-${newData.id}`],
+              newData.saved ? 'icon-saved' : 'icon-unsaved',
+            ]"
+            size="22"
           />
         </div>
       </div>
@@ -121,9 +124,11 @@
 </template>
 
 <script setup lang="ts">
+import gsap from "gsap";
 import { storeToRefs } from "pinia";
 import { useAuth } from "@/store/useAuth";
 import { formatQueryString } from "@/functions";
+
 const axiosInstance = useNuxtApp().$axiosInstance;
 const { $changeApi } = useNuxtApp();
 const router = useRouter();
@@ -152,11 +157,23 @@ onBeforeRouteUpdate(async (to, from) => {
   newData.value = response.data;
 });
 
-const changeSaved = (id: number) => {
-  //   if (loggedIn) {
-  newData.value.saved = !newData.value.saved;
-  console.log(newData);
-  //   }
+const changeSaved = async (id: number) => {
+  if (loggedIn) {
+    if (newData.value.saved) {
+      await axiosInstance.post($changeApi("/unsave"), { post_id: id });
+    } else {
+      await axiosInstance.post($changeApi("/save"), { post_id: id });
+    }
+    const postClass = `.post-saved-${id}`;
+    const targetElement = document.querySelector(postClass);
+    gsap.to(targetElement, {
+      scale: 2.5,
+      duration: 0.12,
+      yoyo: true,
+      repeat: 1,
+    });
+    newData.value.saved = !newData.value.saved;
+  }
 };
 </script>
 
@@ -213,5 +230,19 @@ const changeSaved = (id: number) => {
   height: 480px;
   border-radius: 12px;
   object-fit: cover;
+}
+.icon-unsaved {
+  color: $gray;
+  transition: 0.18s ease-in;
+  &:hover {
+    color: darken($gray, 20%);
+  }
+}
+.icon-saved {
+  color: #618cfb;
+  transition: 0.18s ease-in;
+  &:hover {
+    color: darken(#618cfb, 16%);
+  }
 }
 </style>

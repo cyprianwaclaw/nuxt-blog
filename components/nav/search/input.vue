@@ -8,8 +8,12 @@
     <div class="background" @click="isShow" v-if="show" />
   </Transition>
   <Transition @enter="EnterInput" @leave="LeaveInput" :css="false">
-    <div
-      class="flex shrink-1 z-[45] w-[900px] mx-[100px] relative"
+    <!-- <div
+      class="shrink-1 z-[45] w-[900px] 2xl:mx-[150px] md:mx-[100px] lg:mx-[80px] lg:flex hidden relative"
+      v-if="router.currentRoute.value.name !== 'post-dodaj-nowy'"
+    > -->
+     <div
+      class="shrink-1 z-[45] relative w-full"
       v-if="router.currentRoute.value.name !== 'post-dodaj-nowy'"
     >
       <Icon

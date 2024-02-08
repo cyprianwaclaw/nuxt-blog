@@ -28,7 +28,7 @@
           :link="link.link"
           size="17"
           iconSize="22"
-          paddingSize="32"
+          paddingSize="30"
           :notHover="false"
         />
         <ButtonLink
@@ -65,11 +65,11 @@ const links = [
   },
   {
     name: "Zapisane artykuły",
-    link: "/",
+    link: "/konto/zapisane-posty",
   },
   {
     name: "Moje artykuły",
-    link: "/",
+    link: "/konto/moje-posty",
   },
   {
     name: "Ustawienia",
@@ -158,8 +158,8 @@ const LeaveBg = (el: any, done: any) => {
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 49px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
 }

@@ -13,116 +13,195 @@
 
     <div class="flex cursor-default gap-[64px]">
       <div
-        class="w-[800px] px-[52px] py-[64px] bg-white border-transparent rounded-[12px]"
+        class="content-page w-[800px] px-[52px] py-[64px] bg-white border-transparent rounded-[12px] mt-[68px]"
       >
-      <div class="w-[630px]">
-        <div class="flex gap-3 place-items-center mb-[17px] text-[#676767]">
-          <p class="text-[15px] font-medium">{{ formattedDate }}</p>
-          <div
-            v-for="selectedId in selectedCategoriesIds"
-            :key="selectedId"
-            class="flex gap-3 place-items-center"
-          >
-            <div class="dot" />
-            <p class="text-[15px] font-medium">
-              {{ getOptionNameById(selectedId) }}
-            </p>
+        <div class="w-[630px]">
+          <div class="flex gap-3 place-items-center mb-[17px] text-[#676767]">
+            <p class="text-[15px] font-medium">{{ formattedDate }}</p>
+            <div
+              v-for="selectedId in selectedCategoriesIds"
+              :key="selectedId"
+              class="flex gap-3 place-items-center"
+            >
+              <div class="dot" />
+              <p class="text-[15px] font-medium">
+                {{ getOptionNameById(selectedId) }}
+              </p>
+            </div>
           </div>
-        </div>
-        <textarea
-          type="text"
-          class="title-input"
-          v-model="test"
-          placeholder="Tytuł artykułu..."
-          @input="handleInputTextArea"
-          wrap="soft"
-          rows="1"
-          :maxlength="maxLetter"
-        />
-        <div class="add-hero">dsd</div>
-        <div>
-         
-          <p class="text-center">Zacznij pisac nowy fascynujacy artykuł</p>
-          <div class="flex justify-center w-full gap-7">
-            <div
-              class="bg-[#daddeb] p-4 w-[70px] h-[70px] flex items-center justify-center rounded-full"
-            >
-              <svg
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M25.3125 4.6875H4.6875C4.19022 4.6875 3.71331 4.88504 3.36167 5.23667C3.01004 5.58831 2.8125 6.06522 2.8125 6.5625V23.4375C2.8125 23.9348 3.01004 24.4117 3.36167 24.7633C3.71331 25.115 4.19022 25.3125 4.6875 25.3125H25.3125C25.8098 25.3125 26.2867 25.115 26.6383 24.7633C26.99 24.4117 27.1875 23.9348 27.1875 23.4375V6.5625C27.1875 6.06522 26.99 5.58831 26.6383 5.23667C26.2867 4.88504 25.8098 4.6875 25.3125 4.6875ZM25.3125 6.5625V18.6035L22.2574 15.5496C22.0833 15.3755 21.8766 15.2373 21.6491 15.143C21.4216 15.0488 21.1777 15.0003 20.9314 15.0003C20.6852 15.0003 20.4413 15.0488 20.2138 15.143C19.9863 15.2373 19.7796 15.3755 19.6055 15.5496L17.2617 17.8934L12.1055 12.7371C11.7539 12.3857 11.2771 12.1884 10.7801 12.1884C10.283 12.1884 9.80628 12.3857 9.45469 12.7371L4.6875 17.5043V6.5625H25.3125ZM4.6875 20.1562L10.7812 14.0625L20.1562 23.4375H4.6875V20.1562ZM25.3125 23.4375H22.8082L18.5895 19.2188L20.9332 16.875L25.3125 21.2555V23.4375ZM16.875 11.7188C16.875 11.4406 16.9575 11.1687 17.112 10.9375C17.2665 10.7062 17.4861 10.526 17.7431 10.4195C18.0001 10.3131 18.2828 10.2853 18.5556 10.3395C18.8284 10.3938 19.079 10.5277 19.2756 10.7244C19.4723 10.921 19.6062 11.1716 19.6605 11.4444C19.7147 11.7172 19.6869 11.9999 19.5805 12.2569C19.474 12.5139 19.2938 12.7335 19.0625 12.888C18.8313 13.0425 18.5594 13.125 18.2812 13.125C17.9083 13.125 17.5506 12.9768 17.2869 12.7131C17.0232 12.4494 16.875 12.0917 16.875 11.7188Z"
-                  fill="#D99BFF"
-                />
-              </svg>
+          <textarea
+            type="text"
+            class="title-input"
+            v-model="test"
+            placeholder="Tytuł artykułu..."
+            @input="handleInputTextArea"
+            wrap="soft"
+            rows="1"
+            :maxlength="maxLetter"
+          />
+
+          <div
+            ref="titleElement"
+            contenteditable
+            spellcheck="true"
+            @keydown.enter="validate"
+          >
+            {{ title }}
+          </div>
+
+          <div class="add-hero">dsd</div>
+          <!-- <pre>
+            {{ postDetails }}
+          </pre> -->
+          <!-- <draggable v-model="meals" tag="ul"  :animation="300">
+            <template #item="{ element: meal }">
+              <li>{{ meal }}</li>
+            </template>
+          </draggable> -->
+          <!-- @start="drag = true"
+          @end="drag = false" -->
+          <!-- <draggable
+            :list="postDetails"
+            ghost-class="ghost"
+            move="true"
+            @start="dragging = true"
+           
+            @end="dragging = false"
+          >
+          <div class="list-group-item" v-for="element in list" :key="element.name" :item="element">
+           <template #item="{ element }">
+              {{ element.name }}
+            </template>
             </div>
-            <div
-              class="bg-[#daddeb] p-4 w-[70px] h-[70px] flex items-center justify-center rounded-full"
-            >
-              <svg
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M25.3125 4.6875H4.6875C4.19022 4.6875 3.71331 4.88504 3.36167 5.23667C3.01004 5.58831 2.8125 6.06522 2.8125 6.5625V23.4375C2.8125 23.9348 3.01004 24.4117 3.36167 24.7633C3.71331 25.115 4.19022 25.3125 4.6875 25.3125H25.3125C25.8098 25.3125 26.2867 25.115 26.6383 24.7633C26.99 24.4117 27.1875 23.9348 27.1875 23.4375V6.5625C27.1875 6.06522 26.99 5.58831 26.6383 5.23667C26.2867 4.88504 25.8098 4.6875 25.3125 4.6875ZM25.3125 6.5625V18.6035L22.2574 15.5496C22.0833 15.3755 21.8766 15.2373 21.6491 15.143C21.4216 15.0488 21.1777 15.0003 20.9314 15.0003C20.6852 15.0003 20.4413 15.0488 20.2138 15.143C19.9863 15.2373 19.7796 15.3755 19.6055 15.5496L17.2617 17.8934L12.1055 12.7371C11.7539 12.3857 11.2771 12.1884 10.7801 12.1884C10.283 12.1884 9.80628 12.3857 9.45469 12.7371L4.6875 17.5043V6.5625H25.3125ZM4.6875 20.1562L10.7812 14.0625L20.1562 23.4375H4.6875V20.1562ZM25.3125 23.4375H22.8082L18.5895 19.2188L20.9332 16.875L25.3125 21.2555V23.4375ZM16.875 11.7188C16.875 11.4406 16.9575 11.1687 17.112 10.9375C17.2665 10.7062 17.4861 10.526 17.7431 10.4195C18.0001 10.3131 18.2828 10.2853 18.5556 10.3395C18.8284 10.3938 19.079 10.5277 19.2756 10.7244C19.4723 10.921 19.6062 11.1716 19.6605 11.4444C19.7147 11.7172 19.6869 11.9999 19.5805 12.2569C19.474 12.5139 19.2938 12.7335 19.0625 12.888C18.8313 13.0425 18.5594 13.125 18.2812 13.125C17.9083 13.125 17.5506 12.9768 17.2869 12.7131C17.0232 12.4494 16.875 12.0917 16.875 11.7188Z"
-                  fill="#D99BFF"
-                />
-              </svg>
+          </draggable> -->
+          <pre>
+            {{ postDetails }}
+          </pre>
+          <draggable
+            v-model="postDetails"
+            :animation="300"
+            @start="dragStart"
+            @end="dragEnd"
+          >
+            <template #item="{ element, index }">
+              <div class="draggable-item">
+                <p
+                  ref="editableParagraph"
+                  contenteditable="true"
+                  @input="handleInput(index)"
+                  >
+                  <!-- v-model="element.text" -->
+                  {{ element.text }}
+                </p>
+                <button @click="removePost(index)">Usuń</button>
+              </div>
+            </template>
+          </draggable>
+          <button @click="addPost">Dodaj nowy element</button>
+
+          <draggable
+            v-model="postDetails"
+            :animation="300"
+            @start="drag = true"
+            @end="drag = false"
+          >
+            <template #item="{ element: detail }">
+              <div>
+                <!-- <div v-if="detail.name == 'h2'"> -->
+                <p class="handle">a</p>
+                <p ref="editableParagraph" @click="handleClick" contenteditable="true">
+                  {{ detail.text }}
+                </p>
+                <!-- </div> -->
+                <!-- 
+                <div v-if="detail.name == 'p'">
+                  {{ detail.name }}
+                </div> -->
+                <!-- {{ post.name }} -->
+              </div>
+            </template>
+          </draggable>
+          <div class="content" v-for="(detail, index) in postDetails" :key="index">
+            <!-- {{ detail }} -->
+            <!-- <div v-if="detail.name == 'h2'">
+              <textarea
+                type="text"
+                class="title-input"
+                v-model="detail.text"
+                placeholder="Tytuł artykułu..."
+                @input="handleInputTextArea"
+                wrap="soft"
+                rows="1"
+                :maxlength="maxLetter"
+              />
             </div>
-            <div
-              class="bg-[#daddeb] p-4 w-[70px] h-[70px] flex items-center justify-center rounded-full"
-            >
-              <svg
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M25.3125 4.6875H4.6875C4.19022 4.6875 3.71331 4.88504 3.36167 5.23667C3.01004 5.58831 2.8125 6.06522 2.8125 6.5625V23.4375C2.8125 23.9348 3.01004 24.4117 3.36167 24.7633C3.71331 25.115 4.19022 25.3125 4.6875 25.3125H25.3125C25.8098 25.3125 26.2867 25.115 26.6383 24.7633C26.99 24.4117 27.1875 23.9348 27.1875 23.4375V6.5625C27.1875 6.06522 26.99 5.58831 26.6383 5.23667C26.2867 4.88504 25.8098 4.6875 25.3125 4.6875ZM25.3125 6.5625V18.6035L22.2574 15.5496C22.0833 15.3755 21.8766 15.2373 21.6491 15.143C21.4216 15.0488 21.1777 15.0003 20.9314 15.0003C20.6852 15.0003 20.4413 15.0488 20.2138 15.143C19.9863 15.2373 19.7796 15.3755 19.6055 15.5496L17.2617 17.8934L12.1055 12.7371C11.7539 12.3857 11.2771 12.1884 10.7801 12.1884C10.283 12.1884 9.80628 12.3857 9.45469 12.7371L4.6875 17.5043V6.5625H25.3125ZM4.6875 20.1562L10.7812 14.0625L20.1562 23.4375H4.6875V20.1562ZM25.3125 23.4375H22.8082L18.5895 19.2188L20.9332 16.875L25.3125 21.2555V23.4375ZM16.875 11.7188C16.875 11.4406 16.9575 11.1687 17.112 10.9375C17.2665 10.7062 17.4861 10.526 17.7431 10.4195C18.0001 10.3131 18.2828 10.2853 18.5556 10.3395C18.8284 10.3938 19.079 10.5277 19.2756 10.7244C19.4723 10.921 19.6062 11.1716 19.6605 11.4444C19.7147 11.7172 19.6869 11.9999 19.5805 12.2569C19.474 12.5139 19.2938 12.7335 19.0625 12.888C18.8313 13.0425 18.5594 13.125 18.2812 13.125C17.9083 13.125 17.5506 12.9768 17.2869 12.7131C17.0232 12.4494 16.875 12.0917 16.875 11.7188Z"
-                  fill="#D99BFF"
-                />
-              </svg>
+            <div v-if="detail.name == 'p'">
+              <textarea
+                type="text"
+                class="title-input"
+                v-model="detail.text"
+                placeholder="Tytuł artykułu..."
+                @input="handleInputTextArea"
+                wrap="soft"
+                rows="1"
+                :maxlength="maxLetter"
+              />
             </div>
-            <div
-              class="bg-[#daddeb] p-4 w-[70px] h-[70px] flex items-center justify-center rounded-full"
-            >
-              <svg
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M25.3125 4.6875H4.6875C4.19022 4.6875 3.71331 4.88504 3.36167 5.23667C3.01004 5.58831 2.8125 6.06522 2.8125 6.5625V23.4375C2.8125 23.9348 3.01004 24.4117 3.36167 24.7633C3.71331 25.115 4.19022 25.3125 4.6875 25.3125H25.3125C25.8098 25.3125 26.2867 25.115 26.6383 24.7633C26.99 24.4117 27.1875 23.9348 27.1875 23.4375V6.5625C27.1875 6.06522 26.99 5.58831 26.6383 5.23667C26.2867 4.88504 25.8098 4.6875 25.3125 4.6875ZM25.3125 6.5625V18.6035L22.2574 15.5496C22.0833 15.3755 21.8766 15.2373 21.6491 15.143C21.4216 15.0488 21.1777 15.0003 20.9314 15.0003C20.6852 15.0003 20.4413 15.0488 20.2138 15.143C19.9863 15.2373 19.7796 15.3755 19.6055 15.5496L17.2617 17.8934L12.1055 12.7371C11.7539 12.3857 11.2771 12.1884 10.7801 12.1884C10.283 12.1884 9.80628 12.3857 9.45469 12.7371L4.6875 17.5043V6.5625H25.3125ZM4.6875 20.1562L10.7812 14.0625L20.1562 23.4375H4.6875V20.1562ZM25.3125 23.4375H22.8082L18.5895 19.2188L20.9332 16.875L25.3125 21.2555V23.4375ZM16.875 11.7188C16.875 11.4406 16.9575 11.1687 17.112 10.9375C17.2665 10.7062 17.4861 10.526 17.7431 10.4195C18.0001 10.3131 18.2828 10.2853 18.5556 10.3395C18.8284 10.3938 19.079 10.5277 19.2756 10.7244C19.4723 10.921 19.6062 11.1716 19.6605 11.4444C19.7147 11.7172 19.6869 11.9999 19.5805 12.2569C19.474 12.5139 19.2938 12.7335 19.0625 12.888C18.8313 13.0425 18.5594 13.125 18.2812 13.125C17.9083 13.125 17.5506 12.9768 17.2869 12.7131C17.0232 12.4494 16.875 12.0917 16.875 11.7188Z"
-                  fill="#D99BFF"
-                />
-              </svg>
-            </div>
+            <div v-if="detail.name == 'image'">
+              <div class="w-full h-[300px] bg-slate-100">e</div>
+            </div> -->
           </div>
         </div>
       </div>
-    </div>
-      
-      <div class="w-[350px] bg-white border-transparent rounded-[12px] h-[400px]">
-        <div class="mt-8 top-8 px-[34px]">
-          <p class="w-full text-[18px] font-medium pb-[12px]">Wybierz kategorie</p>
-          <InputMultiSelect
-            :suggestions="suggestions"
-            @update-select="handleSelectedCategories"
-          />
-        </div>
-        <div class="mt-20 top-8 px-[34px]">
-          <p class="w-full text-[18px] font-medium pb-[12px]">Dodaj zawartośc</p>
+      <div @click="isShow()" class="is-show-element">
+        <Icon
+          name="tabler:chevron-left"
+          size="27"
+          :class="{ 'rotate-180': show }"
+          class="text-[#b4b4b4]"
+        />
+        <!-- class="hover:cursor-pointer z-[50] absolute right-[16px] top-[11px] text-[#b4b4b4]" -->
+      </div>
+      <div class="sidebar-elemnent-menu">
+        <!-- <div class="flex mx-auto gap-6 w-full justify-center">
+          <button class="button-primary">Zapisz jako szkic</button>
+          <button class="button-primary">Opublikuj</button>
+        </div> -->
+        <!-- <p class="text-slate-200 text-[18px] mb-[10px]">Opowiedz o artykule</p>
+        <textarea
+          class="add-new-input"
+          type="text"
+          v-model="description"
+          placeholder="Miejsce za zajawkę..."
+          @input="handleInputTextArea"
+          wrap="soft"
+          rows="4"
+          :maxlength="maxLetterDes"
+        />
+        <p class="text-[18px] text-slate-200 mb-[7px] mt-[21px]">Kategoria</p>
+        <InputMultiSelect
+          :suggestions="suggestions"
+          @update-select="handleSelectedCategories"
+        /> -->
+        <p class="text-[19px] text-slate-200 mb-[21px]">Dodaj elementy</p>
+        <!-- <div
+          class="grid grid-cols-2 gap-5 h-[270px] overflow-y-scroll scrollbar-track pr-3"
+        > -->
+        <div class="grid grid-cols-2 gap-5 h-[270px]">
+          <!-- v-for="(single, index) in fieldsArray"
+        :key="index" -->
+          <div
+            v-for="(single, index) in fieldsArray"
+            :key="index"
+            class="item"
+            @click="selectAddItem(single.action)"
+          >
+            <!-- {{ single.icon }} -->
+            <Icon :name="single.icon" color="#BFCBEE" size="38" />
+            <p class="text-[#BFCBEE] mt-[3px] text-[15px] font-medium">
+              {{ single.title }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +209,22 @@
 </template>
 
 <script setup lang="ts">
+import gsap from "gsap";
+import draggable from "vuedraggable";
 import { handleInputTextArea } from "@/functions";
+import { toDisplayString } from "vue";
+
+const title = ref("My title");
+const titleElement = ref(null) as any;
+
+function validate(event: Event) {
+  (event.target as HTMLInputElement).blur();
+  title.value = titleElement.value.innerText.trim();
+  console.log(title.value)
+}
+
+// defineExpose({ titleElement });
+
 const isModalActive = ref(false);
 const confirmation = ref(false);
 const router = useRouter();
@@ -142,57 +236,106 @@ definePageMeta({
   middleware: "auth",
 });
 
-
 const handleImageFile = (file: File | null) => {
   if (file) {
     // Obsługa pliku (np. wysłanie na serwer)
-    console.log('Plik do wysłania:', file);
+    console.log("Plik do wysłania:", file);
   } else {
     // Logika, gdy użytkownik usunie obraz
-    console.log('Obraz został usunięty');
+    console.log("Obraz został usunięty");
   }
 };
 
-
 const handleCroppedFile = (file: File) => {
   // Obsługa pliku (np. wysłanie na serwer)
-  console.log('Plik do wysłania:', file);
+  console.log("Plik do wysłania:", file);
 };
 
 const handleCroppedImageData = (croppedImage: any) => {
   // Obsługa danych obrazu (możesz je np. przesłać do komponentu nadrzędnego)
-  console.log('Dane obrazu:', croppedImage);
+  console.log("Dane obrazu:", croppedImage);
 };
 
 const closeModal = () => {
   // Obsługa zamknięcia modala (jeśli potrzebne)
-  console.log('Modal zamknięty');
+  console.log("Modal zamknięty");
 };
 
+const show = ref(true);
+const isShow = () => {
+  if (show.value === true) {
+    // is-show-element
+    gsap.to(".sidebar-elemnent-menu", {
+      duration: 0.36,
+      x: 400,
+    });
+    gsap.to(".is-show-element", {
+      duration: 0.36,
+      x: 400,
+    });
+    gsap.to(".content-page", {
+      // delay: 0.2,
+      duration: 0.6,
+      x: 100,
+    });
+
+    show.value = !show.value;
+  } else {
+    gsap.to(".content-page", {
+      // delay: 0.24,
+      duration: 0.6,
+      x: 0,
+    });
+    gsap.to(".sidebar-elemnent-menu", {
+      // delay: 0.4,
+      duration: 0.36,
+      x: 0,
+    });
+    gsap.to(".is-show-element", {
+      duration: 0.36,
+      x: 0,
+    });
+    show.value = !show.value;
+  }
+};
 
 const maxLetter = ref(50);
 
-const suggestions = ref([
-  { id: 1, name: "Technologia" },
-  { id: 2, name: "Programowanie" },
-  { id: 3, name: "Projekty DIY" },
-  { id: 4, name: "Recenzje sprzętu" },
-  { id: 5, name: "Poradniki" },
-  { id: 6, name: "Rozwój osobisty" },
-  { id: 7, name: "Podróże" },
-  { id: 8, name: "Kulinaria" },
-  { id: 9, name: "Sztuka i kultura" },
-  { id: 10, name: "Zdrowie i fitness" },
-  { id: 11, name: "Marketing internetowy" },
-  { id: 12, name: "Finanse osobiste" },
-  { id: 13, name: "Nauka języków obcych" },
-  { id: 14, name: "Recenzje książek" },
-  { id: 15, name: "Film i telewizja" },
-  { id: 16, name: "Gry komputerowe" },
-  { id: 17, name: "Motoryzacja" },
-  { id: 18, name: "Moda i uroda" },
-  { id: 19, name: "Życie rodziny" },
+const fieldsArray = ref([
+  { title: "Nagłówek", action: "h2", icon: "ph:image-light" },
+  { title: "Tekst", action: "p", icon: "ph:image-light" },
+  { title: "Lista", action: "image", icon: "ph:image-light" },
+  { title: "Zdjęcie", action: "Heading", icon: "ph:image-light" },
+  { title: "Osadz link", action: "Heading", icon: "ph:image-light" },
+  { title: "HTML", action: "Heading", icon: "ph:image-light" },
+  // { title: "Heading", name: "Heading", icon: "ph:image-light" },
+  // { title: "Heading", name: "Heading", icon: "ph:image-light" },
 ]);
+
+const postDetails = ref([]) as any;
+
+const selectAddItem = (action: any) => {
+  if (action === "h2") {
+    postDetails.value.push({
+      id: postDetails.value.length + 1,
+      text: "",
+      name: "h2",
+    });
+  }
+  if (action === "p") {
+    postDetails.value.push({
+      id: postDetails.value.length + 1,
+      text: "",
+      name: postDetails.value.length + 1,
+    });
+  }
+  if (action === "image") {
+    postDetails.value.push({
+      text: "",
+      name: "image",
+    });
+  }
+};
 
 const currentDate = new Date();
 const day = String(currentDate.getDate()).padStart(2, "0");
@@ -223,21 +366,41 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
-const selectedCategoriesIds = ref();
-const handleSelectedCategories = (selected: any) => {
-  console.log("Wybrane kategorie:", selected);
-  selectedCategoriesIds.value = selected;
-  // Tutaj możesz obsłużyć wybrane kategorie, na przykład zaktualizować stan danych w komponencie nadrzędnym
+// const postDetails = ref([
+//   { id: 1, text: 'Pierwszy akapit' },
+//   { id: 2, text: 'Drugi akapit' },
+// ]);
+
+const dragStart = () => {
+  // Kod do obsługi rozpoczęcia przeciągania
+  console.log("Rozpoczęto przeciąganie");
 };
 
-const getOptionNameById = (id: number) => {
-  const selectedOption = suggestions.value.find((option: any) => option.id === id) as any;
-  return selectedOption ? selectedOption.name : "";
+const dragEnd = () => {
+  // Kod do obsługi zakończenia przeciągania
+  console.log("Zakończono przeciąganie");
+};
+
+const handleInput = (index) => {
+  // Kod do obsługi zmiany tekstu w edytowalnym elemencie
+  console.log("Nowy tekst:", postDetails.value[index].text);
+};
+
+const removePost = (index) => {
+  // Kod do usuwania elementu z tablicy
+  postDetails.value.splice(index, 1);
+};
+
+const addPost = () => {
+  // Dodanie nowego elementu do tablicy
+  const newId = postDetails.value.length + 1;
+  postDetails.value.push({ id: newId, text: "" });
 };
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/style/variables.scss";
+
 .dot {
   width: 4px;
   height: 4px;
@@ -279,5 +442,62 @@ textarea:focus {
   width: 100%;
   height: 400px;
   flex-shrink: 1;
+}
+.is-show-element {
+  position: fixed;
+  top: 50%;
+  background-color: $gray;
+  padding: 16px 7px 16px 5px;
+  right: 375px;
+  transform: translate(-50%, -50%);
+  background: #3d484d;
+  border-radius: 12px 0px 0px 12px;
+  &:hover {
+    cursor: pointer;
+    background: #4d5f66;
+  }
+}
+
+.sidebar-elemnent-menu {
+  // background-color: rgb(60, 109, 209);
+  background: #434f55;
+  padding: 121px 34px 41px 34px;
+  //border-left: 2px solid $border;
+  position: fixed;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+  width: 400px;
+}
+
+.add-new-input {
+  background-color: #23343c;
+  width: 100%;
+  resize: none;
+  border-radius: 12px;
+  padding: 18px 28px 28px 28px;
+  font-size: 18px;
+  color: #dfdada;
+  line-height: 28px;
+  letter-spacing: 0.42px;
+
+  &::placeholder {
+    color: #a5a5a5;
+    letter-spacing: 0.42px;
+  }
+}
+.item {
+  background-color: #23343c;
+  border-radius: 10px;
+  width: 100%;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten(#23343c, 2%);
+  }
 }
 </style>

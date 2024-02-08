@@ -76,7 +76,7 @@
         </p>
       </div>
       <slot />
-      <div class="flex justify-center w-full mt-[34px]">
+      <div v-if="props.confirm" class="flex justify-center w-full mt-[34px]">
         <button @click="$emit('confirmButton')" class="button-primary">
           {{ props.confirm }}
         </button>
@@ -166,5 +166,4 @@ const LeaveBg = (el: any, done: any) => {
 
 <style scoped lang="scss">
 @import "@/assets/style/variables.scss";
-
 </style>

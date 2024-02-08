@@ -1,10 +1,26 @@
 <template>
-  <div class="flex flex-row gap-[64px] cursor-default">
-    <div class="w-full basis-7/12">
+  <div class="flex-col md:hidden w-full">
+    <!-- <pre>
+  {{ posts}}
+    </pre> -->
+
+    {{ posts.image }}
+    <p class="mb-3 text-[19px] font-medium mt-2">Ostatnio dodane artykuły</p>
+    <div class="flex">
+      <div v-for="(post, index) in posts" :key="index">
+        <div class="w-[200px] h-[300px]" :style="`background-image: url(${post.image})`">
+          <p>{{ post.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="lg:flex hidden flex-row gap-[64px] cursor-default"> -->
+  <div class="md:flex hidden flex-row gap-[64px] cursor-default">
+    <div class="w-full basis-7/12 flex-row shrink-1">
       <p class="mb-3 text-[19px] font-medium mt-2">Ostatnio dodane artykuły</p>
-      <img :src="posts[0].image" class="hero-image h-[470px]" />
+      <img :src="posts[0].image" class="hero-image h-[470px] flex shrink-1" />
       <div class="flex justify-between w-full place-item-center mt-[14px]">
-            <div class="flex gap-[10px] place-items-center">
+        <div class="flex gap-[10px] place-items-center">
           <img
             v-if="posts[0].user?.image"
             :src="posts[0].user?.image"
@@ -17,7 +33,7 @@
             <p
               class="flex md:text-[14px] family hover:underline text-light text-[13px] md:mt-0"
             >
-              {{posts[0].user?.name }}
+              {{ posts[0].user?.name }}
             </p>
           </NuxtLink>
         </div>
@@ -40,9 +56,9 @@
       </NuxtLink>
       <p class="des">{{ sliceText(posts[0].description, 114) }}</p>
     </div>
-    <div class="w-full basis-4/12">
+    <div class="w-full basis-4/12 flex-row shrink-1">
       <div>
-        <img :src="posts[1].image" class="hero-image h-[180px]" />
+        <img :src="posts[1].image" class="hero-image h-[180px] flex shrink-1" />
         <div class="flex justify-between w-full place-item-center mt-[14px]">
           <div class="flex gap-[10px] place-items-center">
             <img
@@ -81,7 +97,7 @@
         <p class="des">{{ sliceText(posts[1].description, 114) }}</p>
       </div>
       <div class="mt-10">
-        <img :src="posts[2].image" class="hero-image h-[180px]" />
+        <img :src="posts[2].image" class="hero-image h-[180px] flex shrink-1" />
         <div class="flex justify-between w-full place-item-center mt-[14px]">
           <div class="flex gap-[10px] place-items-center">
             <img

@@ -1,152 +1,146 @@
 <template>
-    
-        <ModalNotification
-      type="warning"
-      title="Czy na pewno chcesz opuścić stronę?"
-      text="Twoje niezapisane dane zostaną utracone."
-      confirm="Tak, opuszczam"
-      :height="320"
-      :modalActive="isOpenDesktop"
-      @confirmButton="handleConfirmButton"
-      @close="handleModalClose"
-    />
-    <!-- <ModalDown 
-    :modalActive="isOpenMobile"
-    title="Dodaj zdjęcie" @close="isModalClose()">
-      <template #content>
-        <LazyModalContentCropQuiz
-          @croppedFile="handleCroppedFile"
-          @croppedImageData="handleCroppedImageData"
-          @close="isModalClose()"
-        />
-      </template>
-    </ModalDown> -->
+  <div>
+    <!-- <img :src="image" alt="" class="w-[20px]" /> -->
+    <!-- {{ cropedImage }}   -->
+    <!-- {{ props}} -->
+  <!-- {{ test.image }} -->
+  <!-- {{ img }} -->
+    <!-- <img :src="cropedImage" alt="" class="w-[20px]" /> -->
+<!-- {{ newData }} -->
+    <button class="button" @click="cropImage({ coordinates, canvas })">Crop image</button>
 
-    <!-- <ModalAlert
-    :modalActive="isOpenDesktop"
-    @close="isModalClose()"
-  > -->
-  <!-- <template #content>
-    <LazyModalContentCropQuiz
-    @croppedFile="handleCroppedFile"
-    @croppedImageData="handleCroppedImageData"
-    @close="isModalClose()"
-  />
-    </template>
-  </ModalAlert> -->
-    <div v-if="props.image">
-      <div class="flex justify-end mt-[14px]" v-if="!croppedImageNew">
-        <button @click="changeImage()">
-          <p class="text-sm font-semibold primary-color ">Zmień zdjęcie</p>
-        </button>
-      </div>
-      <div v-else>
-        <img :src="croppedImageNew" class="after-upload" />
-        <div class="flex justify-between mt-[14px] mb-[5px]">
-          <button @click="removeImage()">
-            <p class="text-sm font-semibold red">Usuń</p>
-          </button>
-          <button @click="changeImage()">
-            <p class="text-sm font-semibold primary-color">Zmień zdjęcie</p>
-          </button>
-        </div>
-      </div>
-    </div>
-      <div v-else>
-        <div class="white-retangle-image" @click="isModal()" v-if="!croppedImageNew">
-          <label class="image-retangle md:mt-3">
-            <Icon
-            name="carbon:cloud-upload"
-            size="38"
-            color="9F9F9F"
-            class="flex justify-center w-full mb-2"
-            />
-            <div class="default-file-input" />
-            <h1>Dodaj zdjęcie</h1>
-          </label>
-        </div>
-        <div v-else>
-          <img :src="croppedImageNew" class="after-upload" />
-          <div class="flex justify-between mt-[16px] mb-[5px]">
-            <button @click="removeImage()">
-              <p class="text-sm font-semibold red">Usuń</p>
-            </button>
-            <button @click="changeImage()">
-              <p class="text-sm font-semibold primary-color">Zmień zdjęcie</p>
-            </button>
-          </div>
-        </div>
-      </div>
+    <Cropper v-if="!isLoading " class="h-[430px]" ref="cropper" :src="img " />
+  </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["close", "imageFile"]);
-const props = defineProps({
-  image:{
-    type: Boolean,
-    default: false
-  },
- test:{
-    type: String,
-    default: false
-  }
+// import { storeToRefs } from "pinia";
+// import { useAuth } from "@/store/useAuth";
+import "vue-advanced-cropper/dist/style.css";
+import { Cropper } from "vue-advanced-cropper";
+// const test = useCookie('auth') as any
+// const authState = useAuth();
+// const { image } = storeToRefs(authState);
+
+// const props = defineProps({
+//   image: {
+//     type: String,
+//     required: true,
+//   },
+// });
+
+// const img1 = image ? image : null
+const axiosInstance = useNuxtApp().$axiosInstance;
+const { $changeApi } = useNuxtApp();
+const newData = ref(null) as any;
+const isLoading = ref(true)
+
+onMounted(async()=>{
+  const response = await axiosInstance.get(
+    $changeApi('/user')
+  );
+  newData.value = response.data;
+  setTimeout(()=>{
+isLoading.value = false;
+  }, 1000)
 })
 
-const isOpenMobile = ref(false);
-const isOpenDesktop = ref(false);
+// const img = ref(null) as any
+// onMounted(()=>{
+//   setTimeout(()=>{
+//     img.value = test.value.image
+//   }, 200)
+// })
+const img =
+  "https://images.unsplash.com/photo-1600984575359-310ae7b6bdf2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
 
-const isModal = () => {
-  if (window.screen.width <= 900) {
-    isOpenMobile.value = true;
-  } else {
-    isOpenDesktop.value = true;
-  }
+let file = ref(null);
+const cropedImage = ref(null) as any;
+const cropper = ref(Cropper) as any;
+
+const cropImage = () => {
+  const data = cropper.value.getResult();
+  console.log(data);
+  console.log(data.coordinates, data.canvas);
+  cropedImage.value = data.canvas.toDataURL();
 };
 
-const isModalClose = () => {
-  if (window.screen.width <= 900) {
-    isOpenMobile.value = false;
+// const isOpenMobile = ref(false);
+// const isOpenDesktop = ref(false);
 
-  } else {
-    isOpenDesktop.value = false;
-  }
-};
+// const isModal = () => {
+//   if (window.screen.width <= 900) {
+//     isOpenMobile.value = true;
+//   } else {
+//     isOpenDesktop.value = true;
+//   }
+// };
 
-const propsImage = ref(props.image)
+// const isModalClose = () => {
+//   if (window.screen.width <= 900) {
+//     isOpenMobile.value = false;
 
-watch(props,(newValue)=>{
-  if(newValue.test==='brak'){
-    removeImage()
-  }
-})
+//   } else {
+//     isOpenDesktop.value = false;
+//   }
+// };
 
-const croppedFile = ref<File | null>(null);
-const croppedImageNew = ref<any | null>(null);
+// const propsImage = ref(props.image)
 
-const handleCroppedFile = (file: File) => {
-  croppedFile.value = file;
-  emit("imageFile", file)
-};
-const handleCroppedImageData = (croppedImage: any) => {
-  croppedImageNew.value = croppedImage;
-};
+// watch(props,(newValue)=>{
+//   if(newValue.test==='brak'){
+//     removeImage()
+//   }
+// })
 
-const changeImage = () => {
-  croppedFile.value = null;
-  croppedImageNew.value = null;
-  console.log('zmieniono')
-  isModal()
-}
+// const croppedFile = ref<File | null>(null);
+// const croppedImageNew = ref<any | null>(null);
 
-const removeImage = () => {
-  croppedFile.value = null;
-  emit("imageFile", null)
-  croppedImageNew.value = null;
-}
+// const handleCroppedFile = (file: File) => {
+//   croppedFile.value = file;
+//   emit("imageFile", file)
+// };
+// const handleCroppedImageData = (croppedImage: any) => {
+//   croppedImageNew.value = croppedImage;
+// };
+
+// const changeImage = () => {
+//   croppedFile.value = null;
+//   croppedImageNew.value = null;
+//   console.log('zmieniono')
+//   isModal()
+// }
+
+// const removeImage = () => {
+//   croppedFile.value = null;
+//   emit("imageFile", null)
+//   croppedImageNew.value = null;
+// }
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/style/_variables.scss";
+
+.cropper-wrapper {
+  overflow: hidden;
+  position: relative;
+  height: 400px;
+  background: black;
+}
+.cropper-background {
+  background: none;
+}
+.image-background {
+  position: absolute;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  left: -10px;
+  top: -10px;
+  background-size: cover;
+  background-position: 50%;
+  filter: blur(5px);
+}
+
 .image-retangle {
   display: flex;
   flex-direction: column;
@@ -259,11 +253,11 @@ input[type="radio"] {
 }
 
 .after-upload {
-    border: 1px solid $border;
-    border-radius: 16px;
-    display: flex;
-    justify-content: center;
-    height: 240px;
-    width: 100%;
-  }
+  border: 1px solid $border;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  height: 240px;
+  width: 100%;
+}
 </style>

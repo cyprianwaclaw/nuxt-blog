@@ -1,13 +1,22 @@
 <template>
-  <ModalAuth :modalActive="isOpen" @close="isAuth" />
-  <div class="flex justify-between w-full lg:px-8 lg:py-6 md:px-5 md:py-5 sm:py-4 px-4 py-3 place-items-center border sm:border-none">
+      <ModalPostDetails
+      type="warning"
+      title="Czy na pewno chcesz opuścić stronę?"
+      text="Twoje niezapisane dane zostaną utracone."
+      confirm="Tak, opuszczam"
+      :height="320"
+      :modalActive="isModalActive"
+      @close="handleModal"
+      />
+      <!-- @confirmButton="handleConfirmButton" -->
+  <div
+    class="shadow-custom fixed z-20 flex justify-between w-full px-8 py-4 place-items-center bg-white"
+  >
     <NuxtLink to="/" class="flex shrink-0">
-      <p class="md:text-[32px] text-[24px] font-medium">Nuxt Blog</p>
+      <p class="text-[32px] font-medium">Nuxt Blog</p>
     </NuxtLink>
-    <div class="lg:flex w-[700px] hidden 2xl:mx-[150px] md:mx-[100px] lg:mx-[80px]">
-      <NavSearchInput />
-    </div>
-    <div class="flex shrink-0 lg:flex hidden">
+    <NavSearchInput />
+    <div class="flex shrink-0">
       <!-- is loggin user -->
       <div v-if="loggedIn ? true : false" class="flex place-items-center gap-[44px]">
         <Transition @enter="EnterInput" @leave="LeaveInput" :css="false">
@@ -17,24 +26,18 @@
             </NuxtLink>
           </div>
         </Transition>
-        <NavImageHero :image="image" />
+        <!-- <button class="button-primary">Zapisz jako szkic</button>
+        <button class="button-primary">Opublikuj</button> -->
+        <!-- <p @click="handleModal">dalej</p> -->
+        <div class="flex gap-[21px]">
+            <button class="button-ghost" @click="handleModal">Zapisz jako szkic</button>
+            <button class="button-primary" @click="handleModal">Przejdz dalej</button>
+        </div>
+            <NavImageHero :image="image" />
       </div>
       <div v-else class="flex gap-8">
         <h3 @click="isAuth" class="cursor-pointer">Logowanie</h3>
       </div>
-    </div>
-    <div
-      class="sm:flex hidden lg:hidden w-[600px] ml-[40px] place-items-center gap-[34px]"
-    >
-      <NavSearchInput />
-      <div class="flex shrink-0">
-        <NavImageHero :image="image" />
-      </div>
-    </div>
-    <div class="flex sm:hidden place-items-center">
-      <NuxtLink to="/search">
-        <Icon name="ph:magnifying-glass" color="C2C2C2" class="" size="28" />
-      </NuxtLink>
     </div>
   </div>
 </template>
@@ -48,9 +51,10 @@ const router = useRouter();
 const authState = useAuth();
 const { loggedIn, image } = storeToRefs(authState);
 
-const isOpen = ref(false);
-const isAuth = () => {
-  isOpen.value = !isOpen.value;
+const isModalActive = ref(false);
+
+const handleModal = () => {
+  isModalActive.value =! isModalActive.value
 };
 
 const EnterInput = (el: any, done: any) => {
@@ -79,9 +83,8 @@ const LeaveInput = (el: any, done: any) => {
   padding: 12px 18px;
   font-size: 17px;
   font-weight: 400;
-
   &::placeholder {
-    color: #9f9f9f;
+    color: #9f9f9f; /* Kolor dla tekstu placeholdera */
   }
 }
 
@@ -89,5 +92,8 @@ const LeaveInput = (el: any, done: any) => {
   background-color: rgb(255, 255, 255);
   border-radius: 12px !important;
   z-index: 100;
+}
+.shadow-custom {
+  box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.07);
 }
 </style>

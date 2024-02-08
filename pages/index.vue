@@ -29,13 +29,17 @@
     />
   </svg>
   <p ref="savedIcon" @click="handleSvgClick()">dsdsd</p> -->
+  <!-- </div> -->
   <SectionHomeHero :posts="data?.hero" />
   <div class="mt-[180px]">
-    <p class="md:text-[18px] md:font-normal gray text-[14px] font-light b-[2px]">
+    <p class="md:text-[18px] md:text-[18px] text-[12px] font-normal gray text-[14px]">
       NOWOŚCI & AUTORZY
     </p>
+    <!-- <h1 class="sm:text-[32px] sm:leading-[42px]">Artykuły wybrane dla Ciebie</h1> -->
     <h1>Artykuły wybrane dla Ciebie</h1>
-    <div class="gap-[121px] flex flex-col w-[750px] mt-[86px]">
+    <div
+      class="gap-[72px] md:gap-[121px] flex flex-col md:w-[750px] mt-[58px] md:mt-[86px]"
+    >
       <CardList
         v-for="(populars, index) in data.recommended"
         :key="index"
@@ -61,6 +65,7 @@ const { data } = await axiosInstance.get($changeApi("/data/home"));
 // const handleModalClose = () => {
 //   isModalActive.value = !isModalActive.value;
 // };
+
 const savedIcon = ref(null);
 
 // onMounted(() => {
