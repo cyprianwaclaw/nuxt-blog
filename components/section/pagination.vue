@@ -14,7 +14,7 @@
         class="-mt-1 text-gray-400 hover:text-black"
       />
     </button>
-    <div v-if="props.current_page > 3" class="flex">
+    <div v-if="props.last_page  > 3 && props.current_page > 2" class="flex">
       <p
         class="page-number"
         @click="changePage(1)"
@@ -36,7 +36,7 @@
         {{ page }}
       </p>
     </div>
-    <div v-if="props.current_page < props.last_page - 1" class="flex">
+    <div v-if="props.last_page  > 3 && props.current_page < props.last_page - 1" class="flex">
       <p class="cursor-default mx-2">...</p>
       <p
         class="page-number"
