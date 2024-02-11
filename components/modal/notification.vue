@@ -8,7 +8,6 @@
     <div class="blur-background" v-if="props.modalActive" />
   </Transition>
   <Transition
-    @before-enter="BeforeEnterModal"
     @enter="EnterModal"
     @leave="LeaveModal"
     :css="false"

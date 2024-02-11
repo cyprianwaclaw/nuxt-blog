@@ -27,7 +27,7 @@
     </div>
     <NuxtLink :to="`/post/${post.link}`">
       <p
-        class="text-[20px] font-medium leading-[28px] hover:text-gray-600 hover:underline"
+        class="md:text-[22px] text-[19px] md:leading-[28px] leading-[21px] font-medium hover:text-gray-600 hover:underline"
       >
         {{ sliceText(post.title, 70) }}
       </p>
@@ -88,6 +88,16 @@ const changeSaved = async (id: number) => {
   height: 21px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+@media screen and (max-width: 640px) {
+
+  .avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 .dot {
   width: 4px;

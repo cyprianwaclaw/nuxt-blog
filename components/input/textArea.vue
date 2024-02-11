@@ -1,105 +1,138 @@
 <template>
-  <div
-  class="base-input"
-   :class="{ 'has-error': !!errorMessage, success: meta.valid }"
- >
-  <div class="-mb-4">
-    <label :for="name">{{ label }}</label>
+  <div class="relative flex flex-col w-full">
     <textarea
-      class="base-input"
-      :name="name"
-      :id="name"
-      :ErrorLogin="hasError"
-      :hasError="hasError"
+      v-on="handlers"
+      :value="value"
       :type="type"
-      :value="inputValue"
       :placeholder="placeholder"
-      @input="handleChange"
-      @blur="handleBlur"
+      :label="label"
+      @focus="inputFocus"
+      @blur="inputBlur"
+      :class="props.hasError ? 'isError' : null"
     />
-
-    <div class="help-message" v-if="errorMessage || meta.valid">
-      <!-- <p class="red"> -->
-        {{ errorMessage || successMessage }}
-      <!-- </p> -->
-    </div>
-  </div>
+    <Transition name="fade">
+      <p v-if="props?.hasError" class="text-red-500 text-[13px] bg-white mt-1">
+        {{ errorMessage }}
+      </p>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { toRef } from "vue";
 import { useField } from "vee-validate";
+import { modes } from "@/functions";
+const color = ref("#9B9B9B") as any;
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: "text",
-  },
-  value: {
-    type: String,
-    default: "",
-  },
   name: {
     type: String,
-    required: true,
+  },
+  error: {
+    type: Boolean || null,
+  },
+  type: {
+    type: String,
+  },
+  icon: {
+    type: String,
+  },
+  placeholder: {
+    type: String,
+  },
+  hasError: {
+    type: String,
   },
   label: {
     type: String,
   },
-  successMessage: {
+  mode: {
     type: String,
-    default: "",
-  },
-  hasError: {
-    type: Boolean,
-  },
-  errorMessage: {
-    type: String,
-    default: "",
-  },
-  placeholder: {
-    type: String,
-    default: "",
+    default: "aggressive",
   },
 });
 
-let ErrorLogin: any = props.hasError;
-
-const name = toRef(props, "name");
-const { value: inputValue, errorMessage, handleBlur, handleChange, meta } = useField(
-  name,
-  undefined,
+const { meta, value, errorMessage, handleChange, handleBlur } = useField(
+  props.name as any,
+  null as any,
   {
-    initialValue: props.value,
+    validateOnValueUpdate: false,
   }
 );
-</script>
-<style scoped>
+const handlers = computed(() => {
+  const on: Record<string, any> = {
+    blur: handleBlur,
+    input: [(e: any) => handleChange(e, false)],
+  };
 
-.success input:focus {
-  border-color: #618cfb;
+  const isError = (err: boolean, color: string) => {
+    if (!err) {
+      return "red";
+    } else {
+      return color;
+    }
+  };
+
+  const triggers = modes[props.mode]({
+    errorMessage,
+    meta,
+  });
+
+  triggers.forEach((t: any) => {
+    if (Array.isArray(on[t])) {
+      on[t].push(handleChange);
+    } else {
+      on[t] = handleChange;
+    }
+  });
+
+  return on;
+});
+</script>
+
+<style scoped lang="scss">
+@import "@/assets/style/variables.scss";
+
+.isError {
+  border: 2px solid $color-error;
+  transition: border 0.3s ease;
+}
+.isError:focus {
+  border: 2px solid $color-error;
+  transition: border 0.3s ease-in, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.text {
+  font-size: 15px;
+  color: red;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateX(0px);
+  opacity: 0;
+}
+textarea::-webkit-resizer {
+  display: none;
 }
 textarea {
-  outline: none;
-  font-size: 16px;
-  font-weight: 500;
   width: 100%;
-  padding-right: 6px;
-  overflow: hidden;
-height: 200px;
-  border-color: white;
+  border: 2px solid $border;
+  line-height: 26px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  transition: border 0.3s ease;
 }
-textarea::placeholder {
-  font-size: 16px;
-}
-textarea:focus::placeholder {
-  font-size: 0px;
-}
-
-.help-message {
-  margin-top: -2px;
-  margin-bottom: 8px;
-  font-size: 12px;
+textarea:focus {
+  border: 2px solid $primary;
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  transition: border 0.3s ease-in, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  box-shadow: none;
 }
 </style>

@@ -9,7 +9,9 @@
   </Transition>
   <div class="relative flex justify-between place-items-end">
     <div class="flex w-full place-items-center gap-[24px]">
-      <h1 class="">Zapisane artykuły</h1>
+      <h1 class="text-[27px] xl:text-[52px] sm:text-[32px] md:text-[42px]">
+        Zapisane artykuły
+      </h1>
       <div class="dot" />
       <p class="text-[#C5C5C5] font-medium text-[20px]">{{ newData.pagination.total }}</p>
     </div>
@@ -23,7 +25,9 @@
       :css="false"
     >
       <div v-if="show" class="space-y-[9px] open-modal">
-        <div class=" bg-white -top-[12px] w-[170px] -mt-[65px] -ml-[100px] py-2 rounded-t-[12px]">
+        <div
+          class="bg-white -top-[12px] w-[170px] -mt-[65px] -ml-[100px] py-2 rounded-t-[12px]"
+        >
           <p class="text-[18px] primary font-medium hover:cursor-pointer text-center">
             Sortowanie
           </p>
@@ -53,7 +57,7 @@
     </Transition>
   </div>
 
-  <div class="grid grid-cols-3 gap-[54px] gap-y-[54px] mt-[72px]">
+  <div class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[32px] md:mt-[68px] xl:mt-[82px]">
     <CardSavedPost
       v-for="(posts, index) in newData.posts"
       :key="index"

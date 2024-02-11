@@ -15,7 +15,7 @@
 const iconArray = ref([
   { icon: "ph:user-circle-duotone", link: "/" },
   { icon: "ph:user-circle-duotone", link: "/post/dodaj-nowy" },
-  { icon: "ph:user-circle-duotone", link: "/konto" },
+  // { icon: "ph:user-circle-duotone", link: "/konto" },
   { icon: "ph:user-circle-duotone", link: "/konto/zapisane-posty" },
 ])
 

@@ -7,7 +7,9 @@
         :array="titlesArray"
         :posts="newData.posts"
       />
-      <div class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px]  w-full">
+      <div
+        class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
+      >
         <CardList
           v-for="(posts, index) in newData?.posts"
           :key="index"
@@ -39,10 +41,9 @@
           <p class="mt-5 text-[19px] font-semibold mb-[4px]">
             {{ newData.user.name }}
           </p>
-          <p class="text-gray-500 leading-[25px]">
-            max 100-114 liter z api Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Sed do eiusmod tempor incididunt ut labore e
-          </p>
+          <!-- <p class="text-gray-500 leading-[25px]">
+             {{ newData.user?.about_user }}
+          </p> -->
         </div>
       </div>
       <div class="mt-[46px]">

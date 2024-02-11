@@ -15,7 +15,6 @@
     <img v-if="props.image" :src="props.image" class="avatar" loading="lazy" />
     <Icon v-else name="carbon:user-avatar-filled" color="#BFCBEE" size="62" />
     <Transition
-      @before-enter="BeforeEnterModal"
       @enter="EnterModal"
       @leave="LeaveModal"
       :css="false"
@@ -46,10 +45,10 @@
 </template>
 
 <script setup lang="ts">
+import gsap from "gsap";
+import { CSSRulePlugin } from 'gsap/dist/CSSRulePlugin';
 import { useAuth } from "@/store/useAuth";
 const authState = useAuth();
-
-import gsap from "gsap";
 
 const props = defineProps({
   image: {
@@ -85,11 +84,6 @@ const setShowTrue = () => {
   show.value = true;
 };
 
-const BeforeEnterModal = (el: any) => {
-  gsap.set(el, {
-    opcity: 0,
-  });
-};
 const EnterModal = (el: any, done: any) => {
   gsap.from(el, {
     duration: 0.16,

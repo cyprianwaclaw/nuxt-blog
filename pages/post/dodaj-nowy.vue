@@ -212,7 +212,6 @@
 import gsap from "gsap";
 import draggable from "vuedraggable";
 import { handleInputTextArea } from "@/functions";
-import { toDisplayString } from "vue";
 
 const title = ref("My title");
 const titleElement = ref(null) as any;

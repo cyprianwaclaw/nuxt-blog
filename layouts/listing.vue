@@ -11,7 +11,15 @@
     <div class="is-show-element lg:hidden flex" @click="handleClick()">
       <Icon name="ph:dots-three-bold" size="38" color="D0D0D0" />
     </div>
-    <div class="sidebar-mobile">dsd</div>
+    <div class="sidebar-mobile">
+      <div class="flex place-items-center justify-end p-5 gap-[9px] text-[#B4B3B3]"  @click="handleClick()">
+        <p>Zamknij</p>
+        <Icon name="ph:x-light" size="23" />
+      </div>
+      <div class="px-6 -mt-5">
+        <slot name="sidebar" />
+      </div>
+    </div>
     <div class="bg-sidebar-mobile" @click="handleClick()" />
   </div>
 </template>
