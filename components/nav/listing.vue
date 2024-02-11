@@ -3,8 +3,8 @@
     <h1 class="text-[27px] xl:text-[52px] sm:text-[32px] md:text-[42px]">
       {{ capitalizeFirstLetter(props.title) }}
     </h1>
-    <div class="dot" />
-    <p class="text-[#C5C5C5] font-medium md:text-[20px] text-[12px]">{{ props.count }}</p>
+    <div class="dot" v-if="props?.count" />
+    <p class="text-[#C5C5C5] font-medium md:text-[20px] text-[12px]">{{ props?.count }}</p>
   </div>
   <div class="relative md:mt-14 mt-4">
     <div class="flex border-b-[2px] h-2 absolute top-[41px] w-full" />
@@ -34,7 +34,7 @@ const props = defineProps({
   },
   count: {
     type: Number,
-    required: true,
+    required: false,
   },
 });
 
@@ -42,15 +42,35 @@ const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+// const changeData = (param: string, value: string) => {
+//   const routeParams = { ...router.currentRoute.value.query };
+//   if (router.currentRoute.value.name === "konto-ustawienia") {
+//     const addNewQuery = () => {
+//       return {
+//         ...routeParams,
+//         title: param,
+//       };
+//     };
+//     router.push({ query: addNewQuery() });
+//   } else {
+//     const addNewQuery = () => {
+//       return {
+//         ...routeParams,
+//         title: param,
+//         page: 1,
+//       };
+//     };
+//     router.push({ query: addNewQuery() });
+//   }
+// };
 const changeData = (param: string, value: string) => {
   const routeParams = { ...router.currentRoute.value.query };
-  const addNewQuery = () => {
-    return {
-      ...routeParams,
-      title: param,
-      page: 1,
-    };
-  };
+  const addNewQuery = () => ({
+    ...routeParams,
+    title: param,
+    ...(router.currentRoute.value.name !== "konto-ustawienia" && { page: 1 }),
+  });
+
   router.push({ query: addNewQuery() });
 };
 </script>

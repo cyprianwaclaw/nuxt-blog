@@ -1,41 +1,43 @@
 <template>
-  <NuxtLayout name="listing">
-    <template #content>
-      <NavListing
+  <div>
+
+    <NuxtLayout name="listing">
+      <template #content>
+        <NavListing
         :title="newData.user.name"
         :count="newData.user.postsCount"
         :array="titlesArray"
-      />
-      <div
+        />
+        <div
         class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
-      >
+        >
         <CardList
-          v-for="(posts, index) in newData?.posts"
-          :key="index"
-          :post="posts"
-          :logged="loggedIn"
+        v-for="(posts, index) in newData?.posts"
+        :key="index"
+        :post="posts"
+        :logged="loggedIn"
         />
       </div>
       <SectionPagination
-        :last_page="newData.pagination.last_page"
-        :current_page="newData.pagination.current_page"
+      :last_page="newData.pagination.last_page"
+      :current_page="newData.pagination.current_page"
       />
     </template>
     <template #sidebar>
       <div class="w-full gap-20 border-own">
         <div class="flex flex-col">
           <img
-            v-if="newData.user?.image"
-            :src="newData.user?.image"
-            class="avatar"
-            loading="lazy"
+          v-if="newData.user?.image"
+          :src="newData.user?.image"
+          class="avatar"
+          loading="lazy"
           />
           <Icon
-            v-else
-            name="carbon:user-avatar-filled"
-            color="#BFCBEE"
-            class="-mb-[6px]"
-            size="81"
+          v-else
+          name="carbon:user-avatar-filled"
+          color="#BFCBEE"
+          class="-mb-[6px]"
+          size="81"
           />
           <p class="mt-5 text-[19px] font-semibold mb-[4px]">
             {{ newData.user.name }}
@@ -46,18 +48,18 @@
         <p class="w-full text-[17px] font-medium mb-6">Ulubione kategorie</p>
         <div class="flex flex-wrap gap-x-3 gap-y-3">
           <NuxtLink
-            v-for="(category, index) in newData.uniqueCategories"
-            :key="index"
-            class="button-category"
-            :to="`/kategoria/${category.link}`"
+          v-for="(category, index) in newData.uniqueCategories"
+          :key="index"
+          class="button-category"
+          :to="`/kategoria/${category.link}`"
           >
-            {{ category.name }}
-          </NuxtLink>
-        </div>
+          {{ category.name }}
+        </NuxtLink>
       </div>
-    </template>
-  </NuxtLayout>
-  <!-- grfghfgh -->
+    </div>
+  </template>
+</NuxtLayout>
+</div>
 </template>
 
 <script setup lang="ts">

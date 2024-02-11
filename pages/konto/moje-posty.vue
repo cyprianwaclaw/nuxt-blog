@@ -1,6 +1,12 @@
 <template>
-  <NavListing title="Moje artykuły" :count="newData.pagination.total" />
-  <div class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[114px] md:mt-[170px]">
+  <NavListing
+    title="Moje artykuły"
+    :count="newData.pagination.total"
+    :array="titlesArray"
+  />
+  <div
+    class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[114px] md:mt-[170px]"
+  >
     <CardSavedPost
       v-for="(posts, index) in newData.posts"
       :key="index"
@@ -32,7 +38,6 @@ const newData = ref(null) as any;
 const titlesArray = ref([
   { name: "Opublikowane", param: null },
   { name: "Szkice", param: "szkice" },
-  // { name: "O autorze", param: "test-3", data: "null" },
 ]);
 
 const perPage = ref(15) as any;

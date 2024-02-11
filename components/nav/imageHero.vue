@@ -72,7 +72,7 @@ const links = [
   },
   {
     name: "Ustawienia",
-    link: "/",
+    link: "/konto/ustawienia",
   },
 ];
 
