@@ -1,15 +1,5 @@
 <template>
-  <!-- {{ router }}
-   <NuxtLink
-            v-for="(category, index) in newData.uniqueCategories"
-            :key="index"
-            class="button-category"
-            :to="`/kategoria/${category.link}`"
-          >
-            {{ category.name }}
-          </NuxtLink> -->
-
-  <!-- <NuxtLayout> -->
+  
   <NuxtLayout name="listing">
     <template #content>
       <NavListing
@@ -79,19 +69,6 @@ const axiosInstance = useNuxtApp().$axiosInstance;
 const { $changeApi } = useNuxtApp();
 const router = useRouter();
 
-
-// useHead({
-//   title: 'My App',
-//   meta: [
-//     { name: 'description', content: 'My amazing site.' }
-//   ],
-//   bodyAttrs: {
-//     class: 'test'
-//   },
-//   script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
-// })
-
-
 const newData = ref(null) as any;
 
 const authState = useAuth();
@@ -121,7 +98,7 @@ onBeforeRouteUpdate(async (to, from) => {
     )
   );
   newData.value = response.data;
-  console.log(to.params.link);
+
 });
 </script>
 

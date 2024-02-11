@@ -5,8 +5,7 @@
         :title="newData.user.name"
         :count="newData.user.postsCount"
         :array="titlesArray"
-        />
-        <!-- :posts="newData.posts" -->
+      />
       <div
         class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
       >
@@ -41,9 +40,6 @@
           <p class="mt-5 text-[19px] font-semibold mb-[4px]">
             {{ newData.user.name }}
           </p>
-          <!-- <p class="text-gray-500 leading-[25px]">
-             {{ newData.user?.about_user }}
-          </p> -->
         </div>
       </div>
       <div class="mt-[46px]">
@@ -61,120 +57,7 @@
       </div>
     </template>
   </NuxtLayout>
-  <!-- <div class="w-full flex gap-[100px]">
-    <div class="">
-      <NavListing
-        :title="newData.user.name"
-        :count="newData.user.postsCount"
-        :array="titlesArray"
-      />
-      <div
-        class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
-      >
-        <CardList
-          v-for="(posts, index) in newData?.posts"
-          :key="index"
-          :post="posts"
-          :logged="loggedIn"
-        />
-      </div>
-      <SectionPagination
-        :last_page="newData.pagination.last_page"
-        :current_page="newData.pagination.current_page"
-      />
-    </div>
-    SIDEBAR
-    <SectionSidebar /> -->
-    <!-- <div class="w-[300px] relative hidden lg:flex">
-      <div class="sticky mt-8 top-10">
-        <div class="w-full gap-20 border-own">
-          <div class="flex flex-col">
-            <img
-              v-if="newData.user?.image"
-              :src="newData.user?.image"
-              class="avatar"
-              loading="lazy"
-            />
-            <Icon
-              v-else
-              name="carbon:user-avatar-filled"
-              color="#BFCBEE"
-              class="-mb-[6px]"
-              size="81"
-            />
-            <p class="mt-5 text-[19px] font-semibold mb-[4px]">
-              {{ newData.user.name }}
-            </p>
-          </div>
-        </div>
-        <div class="mt-[46px]">
-          <p class="w-full text-[17px] font-medium mb-6">Ulubione kategorie</p>
-          <div class="flex flex-wrap gap-x-3 gap-y-3">
-            <NuxtLink
-              v-for="(category, index) in newData.uniqueCategories"
-              :key="index"
-              class="button-category"
-              :to="`/kategoria/${category.link}`"
-            >
-              {{ category.name }}
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="is-show-element lg:hidden flex" @click="handleClick()">
-      <Icon name="ph:dots-three-bold" size="38" color="D0D0D0" />
-    </div>
-    <div class="sidebar-mobile">
-      <div
-        class="flex place-items-center justify-end p-5 gap-[9px] text-[#B4B3B3]"
-        @click="handleClick()"
-      >
-        <p>Zamknij</p>
-        <Icon name="ph:x-light" size="23" />
-      </div>
-      <div class="px-6 -mt-5">
-            <div class="w-[300px] relative hidden lg:flex"> -->
-    <!-- <div class="sticky mt-8 top-10">
-        <div class="w-full gap-20 border-own">
-          <div class="flex flex-col">
-            <img
-              v-if="newData.user?.image"
-              :src="newData.user?.image"
-              class="avatar"
-              loading="lazy"
-            />
-            <Icon
-              v-else
-              name="carbon:user-avatar-filled"
-              color="#BFCBEE"
-              class="-mb-[6px]"
-              size="81"
-            />
-            <p class="mt-5 text-[19px] font-semibold mb-[4px]">
-              {{ newData.user.name }}
-            </p>
-          </div>
-        </div>
-        <div class="mt-[46px]">
-          <p class="w-full text-[17px] font-medium mb-6">Ulubione kategorie</p>
-          <div class="flex flex-wrap gap-x-3 gap-y-3">
-            <NuxtLink
-              v-for="(category, index) in newData.uniqueCategories"
-              :key="index"
-              class="button-category"
-              :to="`/kategoria/${category.link}`"
-            >
-              {{ category.name }}
-            </NuxtLink>
-          </div> -->
-    <!-- </div> -->
-    <!-- </div> -->
-    <!-- </div>
-      </div>
-    </div>
-    <div class="bg-sidebar-mobile" @click="handleClick()" /> -->
-  <!-- </div> -->
+  <!-- grfghfgh -->
 </template>
 
 <script setup lang="ts">
