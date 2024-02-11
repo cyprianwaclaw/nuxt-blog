@@ -33,8 +33,7 @@
       :title="newData?.user.name"
       :count="newData?.user.postsCount"
       :array="titlesArray"
-      :posts="newData?.posts"
-    />
+      />
     <div
       v-if="router.currentRoute?.value?.query?.title === 'about'"
       class="mt-[86px] md:mt-[100px] w-full"

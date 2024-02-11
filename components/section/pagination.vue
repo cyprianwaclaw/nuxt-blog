@@ -1,5 +1,8 @@
 <template>
-  <div class="flex place-items-center md:justify-start justify-center mt-20" v-if="props.last_page != 1">
+  <div
+    class="flex place-items-center md:justify-start justify-center mt-20"
+    v-if="props.last_page != 1"
+  >
     <button
       v-if="props.current_page != 1"
       @click="changePage(props.current_page - 1)"
@@ -15,7 +18,7 @@
       <p
         class="page-number"
         @click="changePage(1)"
-        :class="{ active: page == props.current_page }"
+        :class="{ active: 1 == props.current_page }"
       >
         1
       </p>
@@ -38,7 +41,7 @@
       <p
         class="page-number"
         @click="changePage(props.last_page)"
-        :class="{ active: page == props.current_page }"
+        :class="{ active: props.last_page == props.current_page }"
       >
         {{ props.last_page }}
       </p>

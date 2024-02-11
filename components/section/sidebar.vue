@@ -1,45 +1,40 @@
 <template>
-  <!-- <div>
-    <NavHeader />
+  <div class="w-[300px] relative hidden lg:flex">
+    <div class="sticky mt-8 top-10">
+      <!-- sidebar content -->
+      appesasasas
+    </div>
+  </div>
+  <div class="is-show-element lg:hidden flex" @click="handleClick()">
+    <Icon name="ph:dots-three-bold" size="38" color="D0D0D0" />
+  </div>
+  <div class="sidebar-mobile">
     <div
-      class="lg:w-[1150px] md:mx-auto md:mx-6 mx-4 md:pt-[116px] md:mb-[42px] pb-[120px] pt-[45px]"
-    > -->
-      <div class="flex w-full gap-[100px]">
-        <div class="">
-          <slot name="content" />
-        </div>
-        <div class="w-[300px] relative hidden lg:flex">
-          <div class="sticky mt-8 top-10">
-            <slot name="sidebar" />
-          </div>
-        </div>
-        <div class="is-show-element lg:hidden flex" @click="handleClick()">
-          <Icon name="ph:dots-three-bold" size="38" color="D0D0D0" />
-        </div>
-        <div class="sidebar-mobile">
-          <div
-            class="flex place-items-center justify-end p-5 gap-[9px] text-[#B4B3B3]"
-            @click="handleClick()"
-          >
-            <p>Zamknij</p>
-            <Icon name="ph:x-light" size="23" />
-          </div>
-          <div class="px-6 -mt-5">
-            <slot name="sidebar" />
-          </div>
-        </div>
-        <div class="bg-sidebar-mobile" @click="handleClick()" />
-      </div>
-    <!-- </div>
-    <NavBottom class="w-full px-10" />
-  </div> -->
+      class="flex place-items-center justify-end p-5 gap-[9px] text-[#B4B3B3]"
+      @click="handleClick()"
+    >
+      <p>Zamknij</p>
+      <Icon name="ph:x-light" size="23" />
+    </div>
+    <div class="px-6 -mt-5">
+      <!-- sidebar content -->
+      sasasasas
+    </div>
+  </div>
+  <div class="bg-sidebar-mobile" @click="handleClick()" />
 </template>
 
 <script setup lang="ts">
 import gsap from "gsap";
+const router = useRouter();
+
+const props = defineProps({
+  title: {
+    type: String,
+  },
+});
 
 const show = ref(false);
-
 const handleClick = () => {
   if (show.value === false) {
     gsap.to(".sidebar-mobile", {
@@ -71,6 +66,19 @@ const handleClick = () => {
 
 <style scoped lang="scss">
 @import "@/assets/style/variables.scss";
+.avatar {
+  width: 72px;
+  height: 72px;
+  margin: 0px 4px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.border-own {
+  border-bottom: 2px solid $border;
+  padding-bottom: 46px;
+  padding-top: 46px;
+}
+
 .is-show-element {
   position: fixed;
   background: white;

@@ -1,11 +1,21 @@
 <template>
+  <!-- {{ router }}
+   <NuxtLink
+            v-for="(category, index) in newData.uniqueCategories"
+            :key="index"
+            class="button-category"
+            :to="`/kategoria/${category.link}`"
+          >
+            {{ category.name }}
+          </NuxtLink> -->
+
+  <!-- <NuxtLayout> -->
   <NuxtLayout name="listing">
     <template #content>
       <NavListing
         :title="newData.category.name"
         :count="newData.category.postsCount"
         :array="titlesArray"
-        :posts="newData.posts"
       />
       <div
         class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
@@ -58,6 +68,7 @@
       </div>
     </template>
   </NuxtLayout>
+  <!-- </NuxtLayout> -->
 </template>
 
 <script setup lang="ts">
@@ -68,6 +79,19 @@ const axiosInstance = useNuxtApp().$axiosInstance;
 const { $changeApi } = useNuxtApp();
 const router = useRouter();
 
+
+// useHead({
+//   title: 'My App',
+//   meta: [
+//     { name: 'description', content: 'My amazing site.' }
+//   ],
+//   bodyAttrs: {
+//     class: 'test'
+//   },
+//   script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
+// })
+
+
 const newData = ref(null) as any;
 
 const authState = useAuth();
@@ -76,7 +100,6 @@ const { loggedIn } = storeToRefs(authState);
 const titlesArray = ref([
   { name: "Najnowsze artykóły", param: null, data: "null" },
   { name: "Najpopularniejsze artykóły", param: "popular", data: "null" },
-  // { name: "O autorze", param: "test-3", data: "null" },
 ]);
 
 const response = await axiosInstance.get(
@@ -98,6 +121,7 @@ onBeforeRouteUpdate(async (to, from) => {
     )
   );
   newData.value = response.data;
+  console.log(to.params.link);
 });
 </script>
 

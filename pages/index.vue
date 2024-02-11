@@ -1,5 +1,6 @@
 <template>
-  <!-- <ModalNotification
+  <!-- <NuxtLayout name="page"> -->
+    <!-- <ModalNotification
     :title="'Your Modal Title'"
     :modalActive="isModalActive"
     :clickBackground="true"
@@ -8,14 +9,14 @@
     @close="handleModalClose"
   />
   <button @click="handleModalClose()">click</button> -->
-  <!-- <Icon
+    <!-- <Icon
             name="ph:chat-circle-dots"
             class="-mt-[2px] -mr-[7px]"
             color="#C5C5C5"
             size="22"
             ref="savedIcon"
           /> -->
-  <!-- <svg
+    <!-- <svg
     class="tets-test"
     width="73"
     viewBox="0 0 256 256"
@@ -29,25 +30,26 @@
     />
   </svg>
   <p ref="savedIcon" @click="handleSvgClick()">dsdsd</p> -->
-  <!-- </div> -->
-  <SectionHomeHero :posts="data?.hero" />
-  <div class="mt-[180px]">
-    <p class="md:text-[18px] md:text-[18px] text-[12px] font-normal gray text-[14px]">
-      NOWOŚCI & AUTORZY
-    </p>
-    <!-- <h1 class="sm:text-[32px] sm:leading-[42px]">Artykuły wybrane dla Ciebie</h1> -->
-    <h1>Artykuły wybrane dla Ciebie</h1>
-    <div
-      class="gap-[72px] md:gap-[121px] flex flex-col md:w-[750px] mt-[58px] md:mt-[86px]"
-    >
-      <CardList
-        v-for="(populars, index) in data.recommended"
-        :key="index"
-        :post="populars"
-        :logged="loggedIn"
-      />
+    <!-- </div> -->
+    <SectionHomeHero :posts="data?.hero" />
+    <div class="mt-[180px]">
+      <p class="md:text-[18px] md:text-[18px] text-[12px] font-normal gray text-[14px]">
+        NOWOŚCI & AUTORZY
+      </p>
+      <!-- <h1 class="sm:text-[32px] sm:leading-[42px]">Artykuły wybrane dla Ciebie</h1> -->
+      <h1>Artykuły wybrane dla Ciebie</h1>
+      <div
+        class="gap-[72px] md:gap-[121px] flex flex-col md:w-[750px] mt-[58px] md:mt-[86px]"
+      >
+        <CardList
+          v-for="(populars, index) in data.recommended"
+          :key="index"
+          :post="populars"
+          :logged="loggedIn"
+        />
+      </div>
     </div>
-  </div>
+  <!-- </NuxtLayout> -->
 </template>
 <script setup lang="ts">
 import gsap from "gsap";

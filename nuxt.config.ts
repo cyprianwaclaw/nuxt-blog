@@ -8,7 +8,6 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://unpkg.com/grapesjs/dist/css/grapes.min.css' },
       ],
       script: [
-        // Dodaj skrypt GrapesJS
         { src: 'https://unpkg.com/grapesjs' }
       ],
     },
