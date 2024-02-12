@@ -1,6 +1,7 @@
+
 <template>
-     <div v-if="props.loading" class="button-primary h-[54px] loading-button">
-    <div strss="spinner-container">
+  <div v-if="props.loading" class="button-primary h-[54px] loading-button w-full">
+    <div class="spinner-container">
       <svg
         class="spinner"
         width="24px"
@@ -20,9 +21,17 @@
       </svg>
     </div>
   </div>
-    <button v-else class="w-full button-primary h-[54px]">{{ props.text }}</button>
+  <button
+    v-else
+    :disabled="props.disable"
+    :class="{
+      'button-primary-disabled': props.disable ,
+    }"
+    class="w-full button-primary h-[54px]"
+  >
+    {{ props.text }}
+  </button>
 </template>
-
 <script setup lang="ts">
 const router = useRouter();
 const props = defineProps({
@@ -33,6 +42,11 @@ const props = defineProps({
   text: {
     type: String,
     required: true,
+  },
+  disable: {
+    type: String,
+    required: false,
+    default: false,
   },
 });
 
@@ -45,7 +59,6 @@ const handleClick = () => {
 </script>
 
 <style scoped lang="scss">
-
 .loading-button {
   display: flex;
   align-items: center;

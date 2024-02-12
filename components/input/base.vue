@@ -1,32 +1,22 @@
 <template>
   <div class="relative flex flex-col w-full">
-    <!-- <div
-      class="absolute h-[45px]"
-      > -->
-      <!-- :class="{ 'test-active': errorMessage ? true : false }" -->
-      <!-- :style="{ borderColor: color }" -->
-      <!-- <Icon
-        :name="props.icon"
-        size="25"
-        class="mt-[9px] mx-auto flex w-full ml-[12px] text-[#b7b6b6]"
-      /> -->
-      <!-- :color="isError(errorMessage ? false : true, color)" -->
-    <!-- </div> -->
     <input
       v-on="handlers"
       :value="value"
       :type="type"
       :placeholder="placeholder"
-      :label="label" 
+      :label="label"
       @focus="inputFocus"
       @blur="inputBlur"
       :class="props.hasError ? 'isError' : null"
-      />
-          <p v-if="props?.hasError && props?.hasError !== 'notShow'" class="text-red-500 text-[13px] bg-white mt-1">
+    />
+    <p
+      v-if="props?.hasError && props?.hasError !== 'notShow'"
+      class="text-red-500 text-[13px] bg-white mt-1"
+    >
       {{ props?.hasError }}
-
-          </p>
-      <!-- :style="{ 'border-color': color }" -->
+    </p>
+    <!-- :style="{ 'border-color': color }" -->
     <!-- <p v-if="props.hasError" class="text-red-500 text-[13px] bg-white mt-1">
       {{ errorMessage }}
     </p> -->
@@ -124,7 +114,6 @@ const handlers = computed(() => {
 <style scoped lang="scss">
 @import "@/assets/style/variables.scss";
 
-
 //.success input {
 //  color: #212427;
 //  background: white;
@@ -140,11 +129,16 @@ input {
   border-radius: 10px;
   padding: 9px 16px;
   font-weight: 400;
-  transition: border-color 0.3s ease; 
+  transition: border-color 0.3s ease;
 }
 
 .isError {
   border: 2px solid $color-error;
+}
+
+.isError:focus {
+  border: 2px solid $color-error;
+  transition: border 0.3s ease-in, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 label {
@@ -162,8 +156,7 @@ label {
   transition: 0.3s ease;
 }
 
-input:focus 
- {
+input:focus {
   display: flex;
   font-size: 16px;
   width: 100%;
