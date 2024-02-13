@@ -4,7 +4,7 @@
     <NuxtLink to="/" class="flex shrink-0">
       <p class="md:text-[32px] text-[24px] font-medium">Nuxt Blog</p>
     </NuxtLink>
-    <div class="lg:flex w-[700px] hidden 2xl:mx-[150px] md:mx-[100px] lg:mx-[80px]">
+    <div class="lg:flex w-[900px] hidden 2xl:mx-[150px] md:mx-[100px] lg:mx-[80px]">
       <NavSearchInput />
     </div>
     <div class="flex shrink-0 lg:flex hidden">

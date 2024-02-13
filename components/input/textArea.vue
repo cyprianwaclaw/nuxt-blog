@@ -10,7 +10,6 @@
       @blur="inputBlur"
       :class="props.hasError ? 'isError' : null"
     />
-    {{ props?.hasError }}
     <Transition name="fade">
       <p v-if="props?.hasError" class="text-red-500 text-[13px] bg-white mt-1">
         {{ errorMessage }}

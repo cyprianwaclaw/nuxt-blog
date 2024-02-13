@@ -51,3 +51,28 @@ export  const handleInputTextArea = (event: Event) => {
     target.style.height = 'auto';
     target.style.height = target.scrollHeight + 'px';
 };
+export const debounce = (func: Function, delay: number) => {
+    let timer: number;
+    return (...args: any[]) => {
+        clearTimeout(timer);
+        timer = window.setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+};
+export const goTo = (link: string, type: string, show: any, router:any) => {
+    show
+    if (type === "category") {
+        setTimeout(() => {
+            router.push(`/kategoria/${link}`);
+        }, 54);
+    } else if (type === "post") {
+        setTimeout(() => {
+            router.push(`/post/${link}`);
+        }, 54);
+    } else {
+        setTimeout(() => {
+            router.push(`/autor/${link}`);
+        }, 54);
+    }
+};

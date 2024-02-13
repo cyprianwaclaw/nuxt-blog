@@ -19,9 +19,7 @@
           </p>
         </NuxtLink>
       </div>
-      <p
-        class="flex md:text-[14px] family text-light text-[13px] md:mt-0  gray"
-      >
+      <p class="flex md:text-[14px] family text-light text-[13px] md:mt-0 gray">
         {{ post.date }}
       </p>
     </div>
@@ -91,7 +89,6 @@ const changeSaved = async (id: number) => {
 }
 
 @media screen and (max-width: 640px) {
-
   .avatar {
     width: 18px;
     height: 18px;

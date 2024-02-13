@@ -1,99 +1,85 @@
-<template>
-  <!-- <div> -->
-    <div id="gjs">
-        bhjbhjbh
-      <h1>Hello World Component!</h1>
-    </div>
-    <div id="blocks">njbjubjbj</div>
-  <!-- </div> -->
-</template>
-
 <script setup>
-// import { useHead } from '@nuxt/core';
-import draggable from "vuedraggable";
-useHead(() => {
-  scripts: [
-    { src: "https://unpkg.com/grapesjs" },
-  ];
-  link: [
-    { rel: "stylesheet", href: "https://unpkg.com/grapesjs/dist/css/grapes.min.css" },
-  ];
-});
-onMounted(() => {
-  const editor = grapesjs.init({
-    // Indicate where to init the editor. You can also pass an HTMLElement
-    container: "#gjs",
-    // Get the content for the canvas directly from the element
-    // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
-    fromElement: true,
-    // Size of the editor
-    width: "auto",
-    // Disable the storage manager for the moment
-    storageManager: false,
-    // Avoid any default panel
-    panels: { defaults: [] },
-    blockManager: {
-      appendTo: "#blocks",
-      blocks: [
-        {
-          id: "section", // id is mandatory
-          label: "<b>Section</b>", // You can use HTML/SVG inside labels
-          attributes: { class: "gjs-block-section" },
-          content: `<section>
-          <h1>This is a simple title</h1>
-          <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-        </section>`,
-        },
-        {
-          id: "text",
-          label: "Text",
-          content: '<div data-gjs-type="text">Insert your text here</div>',
-        },
-        {
-          id: "image",
-          label: "Image",
-          // Select the component once it's dropped
-          select: true,
-          // You can pass components as a JSON instead of a simple HTML string,
-          // in this case we also use a defined component type `image`
-          content: { type: "image" },
-          // This triggers `active` event on dropped components and the `image`
-          // reacts by opening the AssetManager
-          activate: true,
-        },
-      ],
-    },
-  });
-});
+const slides = ref(Array.from({ length: 10 }, () => {
+  const r = Math.floor(Math.random() * 256)
+  const g = Math.floor(Math.random() * 256)
+  const b = Math.floor(Math.random() * 256)
+  // Figure out contrast color for font
+  const contrast = r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white'
 
-// const handleInput = (index) => {
-//   // Obsługa zmiany tekstu w edytowalnym elemencie
-//   console.log("Nowy tekst:", postDetails.value[index].text);
-// };
-
-// const removePost = (index) => {
-//   // Usunięcie elementu z tablicy
-//   postDetails.value.splice(index, 1);
-// };
-
-// const addPost = () => {
-//   // Dodanie nowego elementu do tablicy
-//   const newId = postDetails.value.length + 1;
-//   postDetails.value.push({ id: newId, text: "" });
-// };
+  return { bg: `rgb(${r}, ${g}, ${b})`, color: contrast }
+}))
 </script>
 
-<style scoped>
-.draggable-item {
-  border: 1px solid #ccc;
-  padding: 8px;
-  margin-bottom: 8px;
+<template>
+  <div>
+    <h1>Nuxt Swiper Basic Example</h1>
+    <hr>
+    <h2>Swiper Creative Effect</h2>
+    <Swiper
+      :height="100"
+      :slides-per-view="1"
+
+    >
+      <SwiperSlide
+        v-for="(slide, idx) in slides"
+        :key="idx"
+        :style="`background-color: ${slide.bg}; color: ${slide.color}`"
+      >
+        {{ idx }}
+      </SwiperSlide>
+sasas
+      <!-- useSwiper() within a swiper instance -->
+      <SwiperControls />
+    </Swiper>
+    <h2>Swiper Card Effect</h2>
+    <Swiper
+      class="swiper-cards"
+      :width="240"
+      :modules="[SwiperAutoplay, SwiperEffectCards]"
+      :slides-per-view="1"
+      :loop="true"
+      :effect="'cards'"
+      :autoplay="{
+        delay: 8000,
+        disableOnInteraction: true
+      }"
+    >
+      <SwiperSlide
+        v-for="(slide, idx) in slides"
+        :key="idx"
+        :style="`background-color: ${slide.bg}; color: ${slide.color}`"
+      >
+        {{ idx }}
+      </SwiperSlide>
+    </Swiper>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@import "@/assets/style/variables.scss";
+.swiper-slide {
+  width: 300px !important;
+}
+.swiper {
+  //width: 330px !important;
+  width: 400px !important;
+  overflow: hidden;
+  overflow: clip;
+  list-style: none;
+  z-index: 1;
+  display: block;
 }
 
-/* Reset some default styling */
-.gjs-cv-canvas {
-  top: 0;
-  width: 100%;
-  height: 100%;
+.swiper-wrapper {
+  min-width: 100vh;
+  width: 100vh;
+}
+.swiper-cards {
+  width: 240px;
+  height: 240px;
+}
+.swiper-cards .swiper-slide {
+  border-radius: 6px;
+  border: 1px solid black;
 }
 </style>
