@@ -33,7 +33,7 @@ Projekt opiera się na technologii Nuxt na froncie oraz Laravel jako backend. Bl
 - Pinia, persist state
 - Vee-validate, yup
 - Vercel, git
-- Rest API
+- Rest API, axios
 
 
 ## Instalacja projektu
