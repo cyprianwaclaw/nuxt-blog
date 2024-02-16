@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
+
 export const useAuth = defineStore('auth', {
 
     state: () => ({
@@ -14,16 +15,16 @@ export const useAuth = defineStore('auth', {
 
     actions: {
         async login(email: string, password: string) {
+            const API_URL = useRuntimeConfig().public.API_URL;
             try {
                 this.isLoadingButton = true;
+                console.log(API_URL)
                 await new Promise((resolve) => setTimeout(resolve, 600));
-                const res = await axios.post("http://localhost/api/auth/login", { email, password });
+                const res = await axios.post(`${API_URL}/auth/login`, { email, password });
                 this.token = res.data.token
                 this.image = res.data.user_image
                 this.loggedIn = true
                 window?.location?.reload()
-
-                // window?.location?.replace("/restauracje");
             } catch (error: any) {
                 this.isLoadingButton = false;
                 this.errorValue = error.response.data
@@ -42,43 +43,26 @@ export const useAuth = defineStore('auth', {
         nullError() {
             this.errorValue = null
         },
-        // async login1(email: string, password: string) {
-        //     try {
-        //         console.log('test')
-        //         this.isLoadingButton = true
-        //         await new Promise((resolve) => setTimeout(resolve, 600));
-        //         const res = await axiosInstance.post("/auth/login", { email, password })
-        //         // this.token = res.data.token
-        //         // this.loggedIn = true
-        //         // Cookies.set('token', this.token)
-        //         // useRouter().push('/restauracje')
-        //         window?.location?.replace("/restauracje");
-        //     }
-        //     catch (error: any) {
-        //  console.log(error)    
-        //         this.isLoadingButton = false;
-        //         if (error.response.data.errors.PASSWORD) {
-        //             this.errorValue = "Błędne hasło, spróbuj ponownie";
-        //         } else if (error.response.data.errors.EMAIL) {
-        //             this.errorValue = "Użytkownik o tym adresie e-mail nie istnieje";
-        //         } else {
-        //             this.errorValue = "Błędny adres e-mail lub  hasło";
-        //         }
-        //     }
-        //     finally {
-        //         this.isLoadingButton = false
-        //     }
-        // },
-        async register() {
+        async register(name: string, email: string, password: string, confirmPassword: string) {
+            const API_URL = useRuntimeConfig().public.API_URL;
+            try {
+                this.isLoadingButton = true;
+                await new Promise((resolve) => setTimeout(resolve, 600));
+                const res = await axios.post(`${API_URL}/auth/register`, { name, email, password, confirmPassword });
+                this.token = res.data.token
+                this.image = res.data.user_image
+                this.loggedIn = true
+                window?.location?.reload()
 
+                // window?.location?.replace("/restauracje");
+            } catch (error: any) {
+                this.isLoadingButton = false;
+                this.errorValue = error.response.data
+
+            } finally {
+                this.isLoadingButton = false;
+            }
         },
-        // logout() {
-        //     // this.loggedIn = false
-        //     // Cookies.remove('token')
-        //     // this.token = null;
-        //     window?.location?.replace("/");
-        //     // useRouter().push('/')
-        // }
     }
 })
 

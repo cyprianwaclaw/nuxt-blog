@@ -185,7 +185,7 @@ newData.value = response.data;
 const maxLetter = ref(500);
 
 const schema = yup.object({
-  name: yup.string().test("valid-name", "Nieprawidłowe imię", (value) => {
+  name: yup.string().test("valid-name", "Nieprawidłowe imię i nazwisko", (value) => {
     if (!value) return true;
     const nameRegex = /^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+\s[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/;
     return nameRegex.test(value);

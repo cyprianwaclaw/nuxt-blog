@@ -32,7 +32,7 @@
               class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-1/1"
               v-if="router.currentRoute.value.query?.p == 'register'"
             >
-              <ModalAuthRegister @componentLogin="changeData('login')" />
+              <ModalAuthRegister @componentLogin="changeData('login')"/>
             </div>
           </Transition>
           <Transition mode="out-in">

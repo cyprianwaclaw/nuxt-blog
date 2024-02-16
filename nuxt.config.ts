@@ -12,6 +12,11 @@ export default defineNuxtConfig({
       ],
     },
   },
+  runtimeConfig: {
+    public: {
+      API_URL: process.env.API_URL
+    }
+  },
   modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', 'nuxt-swiper'],
   css: ['@/assets/style/tailwind.css', '@/assets/style/style.scss'],
 })
