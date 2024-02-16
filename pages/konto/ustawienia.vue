@@ -273,7 +273,6 @@ const onSubmitSecurity = async (values: any) => {
   } catch (error: any) {
     errorAPIChangePassword.value = error.response.data;
   }
-  // Password1234!
   isLoadingButtonSecurity.value = false;
 };
 

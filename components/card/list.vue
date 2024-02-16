@@ -1,5 +1,7 @@
 <template>
-  <div class="flex shrink-1 max-w-[750px] justify-between sm:gap-10 gap-[24px] place-items-center">
+  <div
+    class="flex shrink-1 max-w-[750px] justify-between sm:gap-10 gap-[24px] place-items-center"
+  >
     <div class="flex flex-col">
       <div class="flex justify-between md:mb-[12px] mb-[6px]">
         <div class="flex sm:gap-[10px] gap-[5px] place-items-center">

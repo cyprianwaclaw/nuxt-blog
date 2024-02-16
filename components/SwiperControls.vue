@@ -7,8 +7,7 @@
     <Icon name="teenyicons:arrow-right-outline" size="28" />
   </button>
 </div>
-    <!-- <button @click="swiper.slideNext()">Next</button>
-  <button @click="swiper.slidePrev()">Previous</button> -->
+
 </template>
 <script setup lang="ts">
 const swiper = useSwiper();
@@ -16,11 +15,11 @@ const swiper = useSwiper();
 const props = defineProps({
   showPrev: {
     type: Boolean,
-    // required: true,
+    required: true,
   },
   showNext: {
     type: Boolean,
-    // required: true,
+    required: true,
   },
 });
 </script>

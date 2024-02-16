@@ -44,7 +44,7 @@ const props = defineProps({
     required: true,
   },
   disable: {
-    type: String,
+    type: Boolean,
     required: false,
     default: false,
   },

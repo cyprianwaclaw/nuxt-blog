@@ -1,6 +1,6 @@
 <template>
+  <!-- @before-enter="BeforeEnterBg" -->
   <Transition
-    @before-enter="BeforeEnterBg"
     @enter="EnterBg"
     @leave="LeaveBg"
     :css="false"
@@ -123,12 +123,12 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "confirmButton"]);
 
-const EnterModal = (el: any, done: any) => {
-  gsap.from(el, {
-    duration: 0.24,
-    y: 24,
-  });
-};
+// const EnterModal = (el: any, done: any) => {
+//   gsap.from(el, {
+//     duration: 0.24,
+//     y: 24,
+//   });
+// };
 const LeaveModal = (el: any, done: any) => {
   gsap.to(el, {
     duration: 0.4,
@@ -140,11 +140,11 @@ const LeaveModal = (el: any, done: any) => {
   });
 };
 
-const BeforeEnterBg = (el: any) => {
-  gsap.set(el, {
-    opacity: 0,
-  });
-};
+// const BeforeEnterBg = (el: any) => {
+//   gsap.set(el, {
+//     opacity: 0,
+//   });
+// };
 const EnterBg = (el: any, done: any) => {
   gsap.to(el, {
     opacity: 1,

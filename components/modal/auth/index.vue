@@ -54,7 +54,7 @@
               class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-1/1"
               v-if="router.currentRoute.value.query?.p == 'password'"
             >
-              <ModalAuthForgotPassword @componentLogin="changeData('login')" />
+              <ModalAuthForgotPassword @componentLogin="changeData('login')" @close="$emit('close')" />
             </div>
           </Transition>
         </div>

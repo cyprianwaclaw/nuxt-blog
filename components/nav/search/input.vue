@@ -1,6 +1,6 @@
 <template>
   <Transition @enter="EnterBg" @leave="LeaveBg" :css="false">
-    <div class="background" @click="isShow" v-if="show" />
+    <div class="background" @click="state.is0penCloseSearch()" v-if="openSearch" />
   </Transition>
   <Transition @enter="EnterInput" @leave="LeaveInput" :css="false">
     <div
@@ -18,82 +18,27 @@
         class="search-input"
         v-model="searchQuery"
         @input="handleInput"
-        @click="setShowTrue"
+        @click="state.is0penCloseSearch()"
         placeholder="Jaki temat Cię interesuje"
       />
       <Transition @enter="EnterModal" @leave="LeaveModal" :css="false">
-        <div v-if="show" class="searching-open">
-          <div v-if="searchResults.results ? false : true" class="relative flex flex-col">
-            <!-- !gdy nie ma wyszukiwania -->
-            <div class="flex justify-between">
-              <div class="w-full flex-nowrap max-w-[300px] shrink-0">
-                <p class="w-full text-[17px] font-medium mb-4">Popularni autorzy</p>
-                <div
-                  @click="goTo(author.link, 'author', isShow(), router)"
-                  v-for="(author, index) in newData.authors"
-                  :key="index"
-                  class="flex place-items-center flex-nowrap mt-3 gap-[6px]"
-                >
-                  <img
-                    v-if="author?.image"
-                    :src="author?.image"
-                    class="avatar"
-                    loading="lazy"
-                  />
-                  <Icon
-                    v-else
-                    name="carbon:user-avatar-filled"
-                    color="#BFCBEE"
-                    size="37"
-                  />
-                  <p class="cursor-pointer hover:text-gray-500">
-                    {{ author.name }}
-                  </p>
-                </div>
-              </div>
-              <div class="">
-                <Swiper
-                  :slidesPerView="1.24"
-                  :spaceBetween="25"
-                  @slideChange="handleSlideChange"
-                >
-                  <SwiperSlide
-                    v-for="(recommended, index) in newData.recommended"
-                    :key="index"
-                  >
-                    <img :src="recommended.image" class="post-image" />
-                    <p
-                      @click="goTo(recommended.link, 'post', isShow(), router)"
-                      class="cursor-pointer"
-                    >
-                      {{ sliceText(recommended.title, 70) }}
-                    </p>
-                  </SwiperSlide>
-                  <div class="flex w-full justify-end mt-5">
-                    <SwiperControls :showPrev="showPrev" :showNext="showNext" />
-                  </div>
-                </Swiper>
-              </div>
-            </div>
-
-            <div class="flex flex-wrap gap-x-3 gap-y-3 mt-[108px]">
-              <p
-                @click="goTo(category.link, 'category', isShow(), router)"
-                v-for="(category, index) in newData.categories"
-                :key="index"
-                class="button-category cursor-pointer"
-              >
-                {{ category.name }}
-              </p>
-            </div>
+        <div v-if="openSearch" class="searching-open">
+          <div v-if="!searchResults.results" class="relative flex flex-col">
+            <NavSearchNonResults
+              :posts="newData.recommended"
+              :categories="newData.categories"
+              :authors="newData.authors"
+            />
           </div>
 
           <div v-else class="relative">
-            <!-- !jest wyszukiwanie -->
-
             <div v-if="loading">Loading...</div>
             <div v-else>
-              {{ searchResults.results }}
+              <NavSearchResults
+                :posts="searchResults.posts"
+                :categories="searchResults.categories"
+                :authors="searchResults.authors"
+              />
             </div>
           </div>
         </div>
@@ -104,26 +49,22 @@
 
 <script setup lang="ts">
 import gsap from "gsap";
+import { useState } from "@/store/useState";
+import { storeToRefs } from "pinia";
 import { debounce, sliceText, goTo } from "@/functions";
 const axiosInstance = useNuxtApp().$axiosInstance;
 const { $changeApi } = useNuxtApp();
 const router = useRouter();
+const state = useState();
 
+const { openSearch, searchQuery } = storeToRefs(state);
 const newData = ref(null) as any;
+
 const response = await axiosInstance.post($changeApi("/search-nav"));
 newData.value = response.data;
 
-const searchQuery = ref("");
 const searchResults = ref([]);
 const loading = ref(false);
-
-const showPrev = ref(false);
-const showNext = ref(true);
-
-const handleSlideChange = (swiper: any) => {
-  showPrev.value = swiper.activeIndex > 0;
-  showNext.value = swiper.activeIndex < newData.value.recommended.length - 1;
-};
 
 const fetchSearchResults = debounce(async () => {
   loading.value = true;
@@ -146,16 +87,6 @@ const handleInput = () => {
 watch(searchQuery, () => {
   fetchSearchResults();
 });
-
-const show = ref(false);
-const isShow = () => {
-  show.value = !show.value;
-  showPrev.value = false;
-  showNext.value = true;
-};
-const setShowTrue = () => {
-  show.value = true;
-};
 
 const EnterModal = (el: any, done: any) => {
   gsap.from(el, {
@@ -209,19 +140,6 @@ const LeaveInput = (el: any, done: any) => {
 <style scoped lang="scss">
 @import "@/assets/style/variables.scss";
 
-.swiper {
-  //width: 330px !important;
-  position: absolute;
-  right: 0;
-  width: 60% !important;
-  padding-right: 32px;
-  overflow: hidden;
-  overflow: clip;
-  list-style: none;
-  z-index: 1;
-  display: block;
-}
-
 .search-input {
   border-radius: 8px;
   cursor: pointer;
@@ -248,16 +166,8 @@ const LeaveInput = (el: any, done: any) => {
   top: 0;
   z-index: 40;
 }
-
-.post-image {
-  width: 100%;
-  height: 210px;
-  display: flex;
-  border-radius: 10px;
-}
 .background {
   background: rgba(0, 0, 0, 0.42);
-  //  background: rgba(0, 0, 0, 0.50);
   backdrop-filter: blur(4px);
   z-index: 40;
   position: fixed;
@@ -266,12 +176,5 @@ const LeaveInput = (el: any, done: any) => {
   top: 0;
   width: 100%;
   height: 100%;
-}
-.avatar {
-  width: 32px;
-  height: 32px;
-  margin-left: 3px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 </style>
