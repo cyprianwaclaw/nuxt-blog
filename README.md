@@ -1,60 +1,56 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Nuxt Blog
 
-## Setup
 
-Make sure to install the dependencies:
+## Wstęp
+Projekt opiera się na technologii Nuxt na froncie oraz Laravel jako backend. Blog umożliwia użytkownikom dodawanie, edytowanie oraz usuwanie artykułów, komentowanie wpisów, logowanie, rejestrację oraz edycję ustawień użytkowników. Dodatkowo dostępna jest funkcja wyszukiwania po tytułach postów, kategoriach oraz autorach. W projekcie byłem odpowiedzialny w projektowanie interfejsu użytkownika oraz wdrożenie aplikacji (backend oraz frontend).
+
+
+## Główne założenia projektowe
+
+ 📄 dodawanie przez użytkowników nowych artykułów przez bagebuilder, działający na zasadzie przesuń i upuść
+
+🧑  rejestracja, logowanie oraz edyacja włanych danych
+
+🏷️  zapisywania interesującycych nas artukułów 
+ 
+💬  dodawanie komentarzy do artykułów z możliwością dodawania reakcji do nich przez zalogowanych użytkowników 
+
+✌️  podział artykułów na kategorie
+
+🔎  wyszukiwarka po tytule artykułu, autorach oraz kategoriach
+
+🧑‍🎨  nowoczesny design
+
+
+
+### Wykorzystana technologia:
+- Javascript, Typescript, CSS, SCSS, HTML
+- Figma
+- Nuxt3, vue3
+- Tailwindcss
+- Gsap, Swipper
+- Pinia, persist state
+- Vee-validate, yup
+- Vercel, git
+- Rest API, axios
+
+
+## Instalacja projektu
+
+Instalowanie oraz uruchomienie apliacji; wymagane jest pobranie i zainstalowanie również backendu
 
 ```bash
+# clone repo
+git clone https://github.com/cyprianwaclaw/nuxt-blog.git
 
 # yarn
 yarn install
 
-## Development Server
+## run developer server
+yarn run dev
 
 Start the development server on `http://localhost:3000`:
 
-```bash
-
-
-# yarn
-yarn dev
-
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# nuxt-blog
