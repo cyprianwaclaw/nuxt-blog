@@ -74,13 +74,16 @@
       </Form>
     </div>
     <div v-else class="mt-[100px] md:mt-[117px]">
-      <div class="gap-[72px] md:gap-[121px] flex flex-col">
+      <div class="gap-[72px] md:gap-[121px] flex flex-col" v-if="newData?.posts.length > 0">
         <CardList
           v-for="(posts, index) in newData?.posts"
           :key="index"
           :post="posts"
           :logged="loggedIn"
         />
+      </div>
+      <div v-else>
+                <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
       </div>
       <SectionPagination
         :last_page="newData.pagination.last_page"

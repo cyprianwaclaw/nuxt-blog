@@ -7,7 +7,7 @@
         class="overflow-y-auto h-[370px] space-y-10 rounded-[10px]"
       >
         <div
-          @click="goTo(post.link, 'post', state.is0penCloseSearch(), router)"
+          @click="goTo(post.link, 'post', state.isCloseSearch(), router)"
           v-for="(post, index) in props.posts"
           :key="index"
         >
@@ -35,7 +35,7 @@
         <div v-if="props.authors.length > 0" class="mb-5">
           <p class="text-[17px] font-medium mb-4">Autorzy</p>
           <div
-            @click="goTo(author.link, 'author', state.is0penCloseSearch(), router)"
+            @click="goTo(author.link, 'author', state.isCloseSearch(), router)"
             v-for="(author, index) in props.authors"
             :key="index"
             class="flex place-items-center flex-nowrap mt-3 gap-[6px]"
@@ -56,7 +56,7 @@
           <p class="text-[17px] font-medium mb-4 mt-[12px]">Kategorie</p>
           <div class="flex flex-wrap gap-x-3 gap-y-3 mt-[10px]">
             <p
-              @click="goTo(category.link, 'category', state.is0penCloseSearch(), router)"
+              @click="goTo(category.link, 'category', state.isCloseSearch(), router)"
               v-for="(category, index) in props.categories"
               :key="index"
               class="button-category cursor-pointer"

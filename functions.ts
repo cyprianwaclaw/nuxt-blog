@@ -46,7 +46,7 @@ export const formatQueryString = (queryObject: Record<string, any>) => {
     return queryString;
 };
 
-export  const handleInputTextArea = (event: Event) => {
+export const handleInputTextArea = (event: Event) => {
     const target = event.target as HTMLTextAreaElement;
     target.style.height = 'auto';
     target.style.height = target.scrollHeight + 'px';
@@ -60,7 +60,7 @@ export const debounce = (func: Function, delay: number) => {
         }, delay);
     };
 };
-export const goTo = (link: string, type: string, show: any, router:any) => {
+export const goTo = (link: string, type: string, show: any, router: any) => {
     show
     if (type === "category") {
         setTimeout(() => {
@@ -76,3 +76,12 @@ export const goTo = (link: string, type: string, show: any, router:any) => {
         }, 54);
     }
 };
+
+export const getDate = () => {
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Dodajemy 1, ponieważ miesiące są indeksowane od 0
+    const year = currentDate.getFullYear();
+
+    return `${day}.${month}.${year}`;
+}

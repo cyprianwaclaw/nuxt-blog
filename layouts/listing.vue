@@ -5,11 +5,11 @@
       class="lg:w-[1150px] md:mx-auto md:mx-6 mx-4 md:pt-[116px] md:mb-[42px] pb-[120px] pt-[45px]"
     > -->
       <div class="flex w-full gap-[100px]">
-        <div class="">
+        <div class=" w-full ">
           <slot name="content" />
         </div>
         <div class="w-[300px] relative hidden lg:flex">
-          <div class="sticky mt-8 top-10">
+          <div class="sticky mt-8 top-10 w-[300px]">
             <slot name="sidebar" />
           </div>
         </div>

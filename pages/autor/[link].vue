@@ -9,7 +9,7 @@
         :array="titlesArray"
         />
         <div
-        class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full"
+        class="gap-[72px] md:gap-[121px] flex flex-col mt-[114px] md:mt-[170px] w-full" v-if="newData?.posts.length > 0"
         >
         <CardList
         v-for="(posts, index) in newData?.posts"
@@ -18,13 +18,16 @@
         :logged="loggedIn"
         />
       </div>
+           <div v-else class="mt-[114px] md:mt-[170px]">
+        <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
+      </div>
       <SectionPagination
       :last_page="newData.pagination.last_page"
       :current_page="newData.pagination.current_page"
       />
     </template>
     <template #sidebar>
-      <div class="w-full gap-20 border-own">
+      <div class="w-full gap-20 w-[300px]">
         <div class="flex flex-col">
           <img
           v-if="newData.user?.image"
@@ -44,7 +47,7 @@
           </p>
         </div>
       </div>
-      <div class="mt-[46px]">
+      <div class="mt-[46px] border-own" v-if="newData.uniqueCategories.length > 0">
         <p class="w-full text-[17px] font-medium mb-6">Ulubione kategorie</p>
         <div class="flex flex-wrap gap-x-3 gap-y-3">
           <NuxtLink
@@ -140,7 +143,7 @@ const handleClick = () => {
   object-fit: cover;
 }
 .border-own {
-  border-bottom: 2px solid $border;
+  border-top: 2px solid $border;
   padding-bottom: 46px;
   padding-top: 46px;
 }

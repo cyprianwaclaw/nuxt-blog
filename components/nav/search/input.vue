@@ -1,6 +1,6 @@
 <template>
   <Transition @enter="EnterBg" @leave="LeaveBg" :css="false">
-    <div class="background" @click="state.is0penCloseSearch()" v-if="openSearch" />
+    <div class="background" @click="state.isCloseSearch()" v-if="openSearch" />
   </Transition>
   <Transition @enter="EnterInput" @leave="LeaveInput" :css="false">
     <div
@@ -18,7 +18,7 @@
         class="search-input"
         v-model="searchQuery"
         @input="handleInput"
-        @click="state.is0penCloseSearch()"
+        @click="state.is0penSearch()"
         placeholder="Jaki temat Cię interesuje"
       />
       <Transition @enter="EnterModal" @leave="LeaveModal" :css="false">
@@ -100,7 +100,7 @@ const LeaveModal = (el: any, done: any) => {
     opacity: 0,
   });
   gsap.set(el, {
-    delay: 0.4,
+    delay: 0.3,
     display: "none",
   });
 };
@@ -117,7 +117,7 @@ const LeaveBg = (el: any, done: any) => {
     duration: 0.35,
   });
   gsap.set(el, {
-    delay: 0.35,
+    delay: 0.3,
     display: "none",
   });
 };

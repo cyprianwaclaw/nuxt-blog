@@ -5,7 +5,7 @@
     :array="titlesArray"
   />
   <div
-    class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[114px] md:mt-[170px]"
+    class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[114px] md:mt-[170px]" v-if="newData?.posts.length > 0"
   >
     <CardSavedPost
       v-for="(posts, index) in newData.posts"
@@ -14,6 +14,9 @@
       :logged="true"
     />
   </div>
+     <div v-else class="mt-[114px] md:mt-[170px]">
+        <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
+      </div>
   <SectionPagination
     :last_page="newData.pagination.last_page"
     :current_page="newData.pagination.current_page"

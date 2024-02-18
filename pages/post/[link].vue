@@ -56,7 +56,15 @@
         </div>
       </div>
       <!-- komentarze -->
-      <div></div>
+      <!-- <div>
+
+<SectionCommentsList :allComponents=" newData.comments "/>
+      </div> -->
+        <!-- <pre>
+
+          {{ newData.comments }}
+        </pre> -->
+      <!-- </div> -->
       <!-- polecane -->
       <div></div>
     </div>
@@ -106,7 +114,11 @@
       </div>
     </div>
   </div>
-  <div class="w-full bg-slate-300 h-[500px] mt-[220px] rounded-[14px]">dsds</div>
+  <!-- {{  newData.id }} -->
+  <SectionCommentsList :allComponents=" newData.comments " :user=" newData.currentUser" :postId="newData.id"/>
+  <!-- <div class="w-full bg-slate-300 h-[500px] mt-[220px] rounded-[14px]">
+
+  </div> -->
   <div class="mt-[220px]">
     <p class="md:text-[18px] md:font-normal gray text-[14px] font-light mb-[2px]">
       ZOBACZ WIĘCEJ OD AUTORA

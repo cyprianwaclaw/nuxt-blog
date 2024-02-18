@@ -6,8 +6,12 @@ export const useState = defineStore('state', {
         searchQuery: '' as string
     }),
     actions: {
-        is0penCloseSearch() {
-            this.openSearch = !this.openSearch;
+        is0penSearch() {
+            this.openSearch = true
+            this.searchQuery = '';
+        },
+        isCloseSearch() {
+            this.openSearch = false
             this.searchQuery = '';
         },
         setSearchQuery(query: string) {

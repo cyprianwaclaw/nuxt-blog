@@ -4,7 +4,7 @@
       <div class="w-full flex-nowrap max-w-[300px] shrink-0">
         <p class="w-full text-[17px] font-medium mb-4">Popularni autorzy</p>
         <div
-          @click="goTo(author.link, 'author', state.is0penCloseSearch(), router)"
+          @click="goTo(author.link, 'author', state.isCloseSearch(), router)"
           v-for="(author, index) in props.authors"
           :key="index"
           class="flex place-items-center flex-nowrap mt-3 gap-[6px]"
@@ -21,7 +21,7 @@
           <SwiperSlide v-for="(recommended, index) in props.posts" :key="index">
             <img :src="recommended.image" class="post-image" />
             <p
-              @click="goTo(recommended.link, 'post', state.is0penCloseSearch(), router)"
+              @click="goTo(recommended.link, 'post', state.isCloseSearch(), router)"
               class="cursor-pointer hover:text-gray-600 hover:underline mt-2"
             >
               {{ sliceText(recommended.title, 70) }}
@@ -36,7 +36,7 @@
 
     <div class="flex flex-wrap gap-x-3 gap-y-3 mt-[108px]">
       <p
-        @click="goTo(category.link, 'category', state.is0penCloseSearch(), router)"
+        @click="goTo(category.link, 'category', state.isCloseSearch(), router)"
         v-for="(category, index) in props.categories"
         :key="index"
         class="button-category cursor-pointer"

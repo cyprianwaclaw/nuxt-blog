@@ -57,7 +57,7 @@
     </Transition>
   </div>
 
-  <div class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[32px] md:mt-[68px] xl:mt-[82px]">
+  <div class="flex grid xl:grid-cols-3 sm:grid-cols-2 gap-[54px] gap-y-[54px] mt-[32px] md:mt-[68px] xl:mt-[82px]"    v-if="newData?.posts.length > 0">
     <CardSavedPost
       v-for="(posts, index) in newData.posts"
       :key="index"
@@ -65,6 +65,9 @@
       :logged="true"
     />
   </div>
+   <div v-else class="mt-[32px] md:mt-[68px] xl:mt-[82px]">
+        <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
+      </div>
   <SectionPagination
     :last_page="newData.pagination.last_page"
     :current_page="newData.pagination.current_page"
