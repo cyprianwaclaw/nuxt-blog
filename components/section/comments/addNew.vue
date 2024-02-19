@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-6 rounded-[11px] mt-16 w-[750px]">
+  <div class="bg-white p-6 rounded-[11px] w-full">
     <div class="flex place-items-center justify-between mb-3">
       <div class="flex sm:gap-[8px] gap-[5px] place-items-center">
         <img
@@ -24,23 +24,31 @@
         </NuxtLink>
       </div>
     </div>
-    <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ meta, values }">
+    <Form
+      @submit="onSubmit"
+      :validation-schema="schema"
+      v-slot="{ meta, values }"
+      :initial-values="initialValues"
+    >
       <div class="flex flex-col gap-[16px]">
         <InputTextArea
+          id="myInput"
           name="text"
           placeholder="Dodaj komentarz..."
           type="text"
           :hasError="!meta.valid"
         />
         <div class="justify-end w-full flex mt-2">
-          <div class="w-[140px]">
+          
+          <p v-if="props.toEdit" @click="$emit('cancel')" class="button-ghost mr-4 cursor-pointer">Anuluj</p>
+          <div class="w-[175px]">
             <ButtonLoading
               isLoading="false"
               :disable="
                 !meta.valid || (values.text?.length ? values.text?.length : 0) < 5
               "
               :loading="isLoading"
-              text="Dodaj"
+              :text="textButton()"
             />
           </div>
         </div>
@@ -55,18 +63,23 @@ import { getDate } from "@/functions";
 import { Form } from "vee-validate";
 const axiosInstance = useNuxtApp().$axiosInstance;
 const { $changeApi } = useNuxtApp();
-const emit = defineEmits(["addNew"]);
+const emit = defineEmits(["addNew", "cancel"]);
 
 const router = useRouter();
+
 const isLoading = ref(false);
 const props = defineProps({
   user: {
-    type: Array,
+    type: Object,
     required: true,
   },
   postId: {
     type: Number,
     required: true,
+  },
+  toEdit: {
+    type: String,
+    required: false,
   },
 });
 
@@ -79,28 +92,27 @@ const schema = yup.object({
 
 const onSubmit = async (values: any, formActions: any) => {
   isLoading.value = true;
+  setTimeout(() => {
+    let newComment = {
+      date: getDate(),
+      text: values.text,
+      relaction: null,
+      toEdit: true,
+      user: props.user,
+    };
 
-  await new Promise((resolve) => setTimeout(resolve, 600));
-  const response = await axiosInstance.post($changeApi("/new-comment"), {
-    text: values.text,
-    post_id: props.postId,
-  });
-
-  const newCommentId = response.data.newCommentId;
-
-  let newComment = {
-    id: newCommentId,
-    date: getDate(),
-    text: values.text,
-    relaction: null,
-    toEdit: true,
-    user: props.user,
-  };
-
-  emit("addNew", newComment);
-  isLoading.value = false;
-  formActions.resetForm();
+    emit("addNew", newComment);
+    isLoading.value = false;
+    formActions.resetForm();
+  }, 600);
 };
+
+const initialValues = {
+  text: props.toEdit ? props.toEdit : "",
+};
+const textButton = ()=>{
+  return props.toEdit ? "Zapisz zmiany": "Dodaj komentarz"
+}
 </script>
 
 <style scoped lang="scss">

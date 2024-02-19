@@ -29,7 +29,6 @@
             color="#C5C5C5"
             size="24"
           />
-          <!-- {{ newData.save  }} -->
           <p class="text-[17px] text-[#C5C5C5]">{{ newData.commentsCount }}</p>
           <Icon
             @click="changeSaved(newData.id)"
@@ -44,28 +43,14 @@
         </div>
       </div>
       <img :src="newData.image" class="hero-image" alt="" />
-      <!-- content post -->
       <div class="mt-[180px]">
         <div class="" v-for="(data, index) in newData.postDetails" :key="index">
           <p :class="data.class_name" class="my-14">
             {{ data.text }}
           </p>
           <img v-if="data.image" :src="data.image" class="my-14 text-image" alt="" />
-          <!-- {{ data }} -->
-          <!-- {{ data.class_name }} -->
         </div>
       </div>
-      <!-- komentarze -->
-      <!-- <div>
-
-<SectionCommentsList :allComponents=" newData.comments "/>
-      </div> -->
-        <!-- <pre>
-
-          {{ newData.comments }}
-        </pre> -->
-      <!-- </div> -->
-      <!-- polecane -->
       <div></div>
     </div>
     <div class="basis-4/12 pl-[64px] relative">
@@ -114,11 +99,11 @@
       </div>
     </div>
   </div>
-  <!-- {{  newData.id }} -->
-  <SectionCommentsList :allComponents=" newData.comments " :user=" newData.currentUser" :postId="newData.id"/>
-  <!-- <div class="w-full bg-slate-300 h-[500px] mt-[220px] rounded-[14px]">
-
-  </div> -->
+  <SectionCommentsList
+    :allComponents="newData.comments"
+    :user="newData.currentUser"
+    :postId="newData.id"
+  />
   <div class="mt-[220px]">
     <p class="md:text-[18px] md:font-normal gray text-[14px] font-light mb-[2px]">
       ZOBACZ WIĘCEJ OD AUTORA

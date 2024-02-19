@@ -8,7 +8,16 @@
       :key="index"
       class="max-w-[600px] flex shrink-1 mt-6"
     >
-      <div class="bg-white p-6 rounded-[11px] w-full">
+      <div v-if="comment.showEditForm" class="w-full">
+        <SectionCommentsAddNew
+          :toEdit="textToUpdate"
+          :user="props?.user"
+          :postId="props.postId"
+          @addNew="editItem"
+          @cancel="cancelEdit"
+        />
+      </div>
+      <div class="bg-white p-6 rounded-[11px] w-full" v-else>
         <div class="flex place-items-center justify-between">
           <div class="flex sm:gap-[8px] gap-[5px] place-items-center">
             <img
@@ -38,16 +47,17 @@
             {{ comment.date }}
           </p>
         </div>
+
         <p class="mt-[10px] text-gray-700 text-[15px] mr-[100px]">{{ comment.text }}</p>
         <div v-if="comment.toEdit" class="flex gap-4 justify-end mt-5">
           <p @click="removeItem(comment.id, index)" class="error-color cursor-pointer">
             usuń
           </p>
-          <p>edytuj</p>
+          <p @click="editItemStart(comment.id, index)" class="cursor-pointer">edytuj</p>
         </div>
       </div>
     </div>
-    <div v-if="loggedIn">
+    <div v-if="loggedIn" class="w-[750px] mt-10">
       <SectionCommentsAddNew
         :user="props?.user"
         :postId="props.postId"
@@ -73,7 +83,7 @@ const props = defineProps({
     required: true,
   },
   user: {
-    type: Array,
+    type: Object,
     required: false,
   },
   postId: {
@@ -83,14 +93,18 @@ const props = defineProps({
 });
 
 const arrayComments = ref([]) as any;
-arrayComments.value.push(...props.allComponents);
+arrayComments.value.push(
+  ...props.allComponents.map((comment: any) => ({ ...comment, showEditForm: false }))
+);
 
 const addComment = async (value: any) => {
-  arrayComments.value.push(value);
-  await axiosInstance.post($changeApi("/new-comment"), {
+  const response = await axiosInstance.post($changeApi("/new-comment"), {
     text: value.text,
     post_id: props.postId,
   });
+  const newCommentId = response.data.newCommentId;
+  const newComment = { ...value, showEditForm: false, id: newCommentId };
+  arrayComments.value.push(newComment);
 };
 
 const removeItem = async (id: number, index: number) => {
@@ -99,6 +113,36 @@ const removeItem = async (id: number, index: number) => {
     comment_id: id,
   });
 };
+
+const textToUpdate = ref("");
+const commentItems = ref() as any;
+const editedComment = ref() as any;
+
+const editItemStart = async (id: number, index: number) => {
+  commentItems.value = arrayComments.value.find((comment: any) => comment.id == id);
+  textToUpdate.value = commentItems.value.text;
+  commentItems.value.showEditForm = true;
+};
+
+const editItem = async (value: any) => {
+  editedComment.value = value;
+};
+
+const cancelEdit = () => {
+  commentItems.value.showEditForm = false;
+};
+
+watch(editedComment, async (newValue) => {
+  await axiosInstance.post($changeApi("/update-comment"), {
+    comment_id: commentItems.value.id,
+    text: newValue.text,
+  });
+  commentItems.value.showEditForm = false;
+  let changeText = arrayComments.value.find(
+    (comment: any) => comment.id == commentItems.value.id
+  );
+  changeText.text = newValue.text;
+});
 </script>
 
 <style scoped lang="scss">

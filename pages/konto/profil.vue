@@ -152,7 +152,7 @@ const onSubmit = async (values: any) => {
 };
 
 const initialValues = {
-  about_user: newData.value?.about_user ? newData.value?.about_user : null,
+  about_user: newData.value?.about_user ? newData.value?.about_user : '',
 };
 </script>
 
