@@ -85,3 +85,13 @@ export const getDate = () => {
 
     return `${day}.${month}.${year}`;
 }
+
+export const bgDynamicColor = (type: string) => {
+    if (type === "success") {
+        return "#CEF2D2";
+    } else if (type === "warning") {
+        return "#3AA845";
+    } else {
+        return "#FFE5E5";
+    }
+}

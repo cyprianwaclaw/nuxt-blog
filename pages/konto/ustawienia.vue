@@ -1,5 +1,10 @@
 <template>
-  <div class="flex flex-col max-w-[750px]" @click="errorAPINull">
+  <ModalToast 
+  text='Zapisano zmiany' 
+  :modalActive="isToast" 
+  type="success" 
+  />
+  <div class="flex flex-col max-w-[750px] cursor-default" @click="errorAPINull">
     <NavListing title="Ustawienia konta" :array="titlesArray" />
     <!-- dla moje dane -->
     <div class="flex flex-col max-w-[540px]">
@@ -28,13 +33,21 @@
               type="text"
               :hasError="errors?.email"
             />
+            <p class="text-gray-500 -mb-[12px] text-[14px] mt-5">Link do profilu</p>
+            <InputBase
+              name="link"
+              placeholder="Twój link"
+              type="text"
+              :hasError="errors?.link"
+            />
             <div class="w-full flex mt-7 flex justify-end">
-              <div class="w-[150px]">
+              <div class="w-[175px]">
                 <ButtonLoading
                   :disable="
                     !meta.valid ||
                     (values.name === initialValues.name &&
-                      values.email === initialValues.email)
+                      values.email === initialValues.email &&
+                      values.link === initialValues.link)
                   "
                   isLoading="false"
                   :loading="isLoadingButton"
@@ -104,7 +117,7 @@
               />
             </div>
             <div class="w-full flex mt-7 flex justify-end">
-              <div class="w-[150px]">
+              <div class="w-[175px]">
                 <ButtonLoading
                   :disable="
                     !meta.valid ||
@@ -174,6 +187,14 @@ const newData = ref(null) as any;
 const isLoadingButton = ref(false);
 const isLoadingButtonSecurity = ref(false);
 
+const isToast = ref(false);
+const toastShow = () => {
+  setTimeout(() => {
+    isToast.value = false;
+  }, 1000);
+  isToast.value = true;
+};
+
 const titlesArray = ref([
   { name: "Moje dane" },
   { name: "Bezpieczeństwo", param: "security" },
@@ -195,6 +216,7 @@ const schema = yup.object({
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(value);
   }),
+  link: yup.string(),
 });
 
 const schemaSecurity = yup.object({
@@ -243,20 +265,18 @@ const onSubmit = async (values: any) => {
   await axiosInstance.post($changeApi("/user/change"), {
     name: values.name,
     email: values.email,
+    link: values.link,
   });
-  const response = await axiosInstance.get($changeApi("/user"));
-  newData.value = response.data;
+
   initialValues.value = {
-    name: newData.value.name,
-    email: newData.value.email,
+    name: values.name,
+    email: values.email,
+    link: values.link,
   };
   setTimeout(() => {
+    toastShow();
     isLoadingButton.value = false;
-  }, 800);
-  initialValues.value = {
-    name: newData.value.name,
-    email: newData.value.email,
-  };
+  }, 600);
 };
 
 const errorAPIChangePassword = ref(null) as any;
@@ -270,6 +290,7 @@ const onSubmitSecurity = async (values: any) => {
       oldPassword: values.oldPassword,
       confirmPassword: values.confirmPassword,
     });
+     toastShow();
   } catch (error: any) {
     errorAPIChangePassword.value = error.response.data;
   }
@@ -284,6 +305,7 @@ const initialValues = ref({});
 initialValues.value = {
   name: newData.value.name,
   email: newData.value.email,
+  link: newData.value.link,
 };
 </script>
 

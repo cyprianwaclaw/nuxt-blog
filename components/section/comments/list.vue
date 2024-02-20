@@ -1,4 +1,7 @@
 <template>
+  <ModalToast text="Dodano komentarz" :modalActive="isToast" type="success" />
+  <ModalToast text="Zapisano komentarz" :modalActive="isToastSaved" type="success" />
+  <ModalToast text="Usunięto komentarz" :modalActive="isToastError" type="error" />
   <div
     class="w-full bg-gray-200 mt-[220px] px-[84px] py-[64px] pb-[82px] rounded-[14px] cursor-default"
   >
@@ -92,12 +95,34 @@ const props = defineProps({
   },
 });
 
+const isToast = ref(false);
+const toastShow = () => {
+  setTimeout(() => {
+    isToast.value = false;
+  }, 1000);
+  isToast.value = true;
+};
+const isToastError = ref(false);
+const toastShowError = () => {
+  setTimeout(() => {
+    isToastError.value = false;
+  }, 1000);
+  isToastError.value = true;
+};
+const isToastSaved = ref(false);
+const toastShowSaved = () => {
+  setTimeout(() => {
+     isToastSaved.value = false;
+  }, 1000);
+  isToastSaved.value = true;
+};
 const arrayComments = ref([]) as any;
 arrayComments.value.push(
   ...props.allComponents.map((comment: any) => ({ ...comment, showEditForm: false }))
 );
 
 const addComment = async (value: any) => {
+  toastShow();
   const response = await axiosInstance.post($changeApi("/new-comment"), {
     text: value.text,
     post_id: props.postId,
@@ -109,6 +134,7 @@ const addComment = async (value: any) => {
 
 const removeItem = async (id: number, index: number) => {
   arrayComments.value.splice(index, 1);
+  toastShowError();
   await axiosInstance.post($changeApi("/delete-comment"), {
     comment_id: id,
   });
@@ -138,6 +164,7 @@ watch(editedComment, async (newValue) => {
     text: newValue.text,
   });
   commentItems.value.showEditForm = false;
+  toastShowSaved();
   let changeText = arrayComments.value.find(
     (comment: any) => comment.id == commentItems.value.id
   );

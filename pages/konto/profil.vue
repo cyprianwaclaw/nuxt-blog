@@ -1,4 +1,9 @@
 <template>
+  <ModalToast 
+  text='Zmieniono opis' 
+  :modalActive="isToast" 
+  type="success" 
+  />
   <ModalNotification
     :modalActive="isModalActive"
     :width="600"
@@ -33,7 +38,7 @@
       :title="newData?.user.name"
       :count="newData?.user.postsCount"
       :array="titlesArray"
-      />
+    />
     <div
       v-if="router.currentRoute?.value?.query?.title === 'about'"
       class="mt-[86px] md:mt-[100px] w-full"
@@ -57,24 +62,26 @@
             :hasError="!meta.valid"
           />
           <div class="justify-end w-full flex mt-4">
-            <button
-              class="button-primary"
-              :class="{
-                'button-primary-disabled':
-                  !meta.valid || values.about_user === meta.initialValues.about_user,
-              }"
-              :disabled="
-                !meta.valid || values.about_user === meta.initialValues.about_user
-              "
-            >
-              Zapisz zmiany
-            </button>
+            <div class="w-[175px]">
+              <ButtonLoading
+                isLoading="false"
+                :disable="
+                 !meta.valid ||
+                 (values.about_user === initialValues.about_user)
+                 "
+                 :loading="isLoading"
+                 text="Zapisz zmiany"
+                 />         
+            </div>
           </div>
         </div>
       </Form>
     </div>
     <div v-else class="mt-[100px] md:mt-[117px]">
-      <div class="gap-[72px] md:gap-[121px] flex flex-col" v-if="newData?.posts.length > 0">
+      <div
+        class="gap-[72px] md:gap-[121px] flex flex-col"
+        v-if="newData?.posts.length > 0"
+      >
         <CardList
           v-for="(posts, index) in newData?.posts"
           :key="index"
@@ -83,7 +90,7 @@
         />
       </div>
       <div v-else>
-                <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
+        <p class="text-[32px] font-medium text-gray-300">Brak artykułów</p>
       </div>
       <SectionPagination
         :last_page="newData.pagination.last_page"
@@ -107,6 +114,7 @@ definePageMeta({
   middleware: "auth",
 });
 
+const isLoading = ref(false);
 const newData = ref(null) as any;
 
 const authState = useAuth();
@@ -118,6 +126,15 @@ const titlesArray = ref([
   { name: "O mnie", param: "about", data: "null" },
 ]);
 
+
+const isToast = ref(false);
+const toastShow = () => {
+  setTimeout(() => {
+    isToast.value = false;
+  }, 1400);
+  isToast.value = true;
+};
+
 const isModalActive = ref(false);
 const handleModalClose = () => {
   isModalActive.value = !isModalActive.value;
@@ -127,6 +144,11 @@ const response = await axiosInstance.get(
   $changeApi(`/user/profile?${formatQueryString(router.currentRoute.value.query)}`)
 );
 newData.value = response.data;
+
+
+const initialValues = ref() as any
+
+
 
 onBeforeRouteUpdate(async (to, from) => {
   window.scrollTo(0, 0);
@@ -140,19 +162,33 @@ const maxLetter = ref(500);
 
 const schema = yup.object({
   about_user: yup
-    .string()
-    .min(5, "Quiz nie może być dłuższy niż 99 minut")
-    .max(200, "Quiz nie może być dłuższy niż 99 minut"),
+  .string()
+  .test("valid-name", "Opis musi zaczynać się od dużej litery", (value) => {
+    if (!value) return true;
+    const nameRegex = /^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]/;
+    return nameRegex.test(value);
+  })
+    .min(5, "Wprowadź co najmniej 5 znaków")
+    .max(200, "Opis nie może być dłuższy niż 200 znaków")
 });
 
 const onSubmit = async (values: any) => {
+  isLoading.value = true;
+  await new Promise((resolve) => setTimeout(resolve, 600));
   await axiosInstance.post($changeApi("/user/details"), {
     about_user: values.about_user,
   });
+  initialValues.value = {
+     about_user: values.about_user
+  };
+   toastShow()
+  isLoading.value = false;
+  
 };
 
-const initialValues = {
-  about_user: newData.value?.about_user ? newData.value?.about_user : '',
+// const initialValues = ref() as any
+initialValues.value = {
+  about_user: newData.value?.about_user ? newData.value?.about_user : "",
 };
 </script>
 
